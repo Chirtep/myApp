@@ -1,0 +1,16 @@
+.friendBar {
+    text-align: center;
+}
+
+.friendBar h1 {
+    color: black;
+}
+
+.friends {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: 1em;
+    grid-row-gap: 1em;
+}
