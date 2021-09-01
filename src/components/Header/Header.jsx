@@ -3,7 +3,7 @@ import s from './Header.module.css';
 
 const Header = () => {
     return <header className={s.header}>
-        <img src='https://kartinkin.com/uploads/posts/2021-01/thumbs/1610501112_2-p-kruglii-fon-dlya-logotipa-3.png'/>
+        <img src='https://www.meme-arsenal.com/memes/44a53a47e30718921287240e657440c6.jpg'/>
     </header>
 }
 
