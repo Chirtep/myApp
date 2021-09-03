@@ -70,7 +70,7 @@ let store = {
         }
     },
 
-    _rerenderEntireTree() {
+    _callSubscriber() {
         console.log('no observers')
     },
 
@@ -78,8 +78,8 @@ let store = {
         return this._state;
     },
 
-    subscribe (observer) {
-        this._rerenderEntireTree = observer; //паттерн наблюдатель // publisher subscriber
+    subscribe(observer) {
+        this._callSubscriber = observer; //паттерн наблюдатель // publisher subscriber
     },
 
     setPost() {
@@ -91,12 +91,12 @@ let store = {
 
         this._state.profilePage.posts.push(newPost);
         this._state.profilePage.newPostText = '';
-        this._rerenderEntireTree(this._state);
+        this._callSubscriber(this._state);
     },
 
-    setNewPostText (newText) {
-       this._state.profilePage.newPostText = newText;
-       this._rerenderEntireTree(this._state);
+    setNewPostText(newText) {
+        this._state.profilePage.newPostText = newText;
+        this._callSubscriber(this._state);
     },
 
     setMessage() {
@@ -107,13 +107,14 @@ let store = {
 
         this._state.dialogsPage.messages.push(newMessage);
         this._state.dialogsPage.newMessage = '';
-        this._rerenderEntireTree(this._state);
+        this._callSubscriber(this._state);
     },
 
-    setNewMessageText (newText) {
+    setNewMessageText(newText) {
         this._state.dialogsPage.newMessage = newText;
-        this._rerenderEntireTree(this._state);
+        this._callSubscriber(this._state);
     }
 }
 
-export default store
+export default store;
+window.store = store;
