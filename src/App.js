@@ -15,21 +15,17 @@ const App = (props) => {
     return (
         <div className='app-wrapper'>
             <Header/>
-            <Navbar state={props.appState.sideBar}/>
+            <Navbar store={props.store}/>
             <div className='app-wrapper-content'>
                 <Route path='/dialogs'
                        render={() =>
                            <Dialogs
-                               state={props.appState.dialogsPage}
-                               addMessage={props.addMessage}
-                               updateNewMessageText={props.updateNewMessageText}
+                               store={props.store}
                            />}/>
                 <Route path='/profile'
                        render={() =>
                            <Profile
-                               profilePage={props.appState.profilePage}
-                               addPost={props.addPost}
-                               updateNewPostText={props.updateNewPostText}
+                               store={props.store}
                            />}/>
                 <Route path='/news'
                        render={() =>
