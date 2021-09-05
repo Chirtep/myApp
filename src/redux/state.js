@@ -1,5 +1,10 @@
 import React from "react";
 
+const SET_POST = 'SET-POST';
+const SET_NEW_POST_TEXT = 'SET-NEW-POST-TEXT';
+const SET_MESSAGE = 'SET-MESSAGE';
+const SET_NEW_MESSAGE_TEXT = 'SET-NEW-MESSAGE-TEXT';
+
 let store = {
     _state: {
         profilePage: {
@@ -85,8 +90,8 @@ let store = {
     //action - это объект, действие, которое должно сообщить, что именно нужно выполнить;
     // у него должно быть свойство { type: 'ЗДЕСЬ УКАЗЫВАЕМ, ЧТО ВЫПОЛНИТЬ, НАПРИМЕР SET-POST' }
 
-    dispatch (action) {
-        if (action.type === 'SET-POST') {
+    dispatch(action) {
+        if (action.type === SET_POST) {
             let newPost = {
                 id: 5,
                 message: this._state.profilePage.newPostText,
@@ -97,26 +102,38 @@ let store = {
             this._state.profilePage.newPostText = '';
             this._callSubscriber(this._state);
 
-        } else if (action.type === 'SET-NEW-POST-TEXT') {
+        } else if (action.type === SET_NEW_POST_TEXT) {
             this._state.profilePage.newPostText = action.newText;
             this._callSubscriber(this._state);
 
-        } else if (action.type === 'SET-MESSAGE') {
-            let newMessage = {
-                id: 7,
-                message: this._state.dialogsPage.newMessage
-            };
+        } else {
+            if (action.type === SET_MESSAGE) {
+                let newMessage = {
+                    id: 7,
+                    message: this._state.dialogsPage.newMessage
+                };
 
-            this._state.dialogsPage.messages.push(newMessage);
-            this._state.dialogsPage.newMessage = '';
-            this._callSubscriber(this._state);
+                this._state.dialogsPage.messages.push(newMessage);
+                this._state.dialogsPage.newMessage = '';
+                this._callSubscriber(this._state);
 
-        } else if (action.type === 'SET-NEW-MESSAGE-TEXT') {
-            this._state.dialogsPage.newMessage = action.newText;
-            this._callSubscriber(this._state);
+            } else {
+                if (action.type === SET_NEW_MESSAGE_TEXT) {
+                    this._state.dialogsPage.newMessage = action.newText;
+                    this._callSubscriber(this._state);
+                }
+            }
         }
     }
 }
+
+export const setPostActionCreator = () => ({type: SET_POST})
+export const setNewPostTextActionCreator = (text) =>
+    ({type: SET_NEW_POST_TEXT, newText: text})
+
+export const setMessageActionCreator = () => ({type: SET_MESSAGE})
+export const setNewMessageTextActionCreator = (text) =>
+    ({type: SET_NEW_MESSAGE_TEXT, newText: text})
 
 export default store;
 window.store = store;
