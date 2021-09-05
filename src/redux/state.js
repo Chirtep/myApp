@@ -82,37 +82,39 @@ let store = {
         this._callSubscriber = observer; //паттерн наблюдатель // publisher subscriber
     },
 
-    setPost() {
-        let newPost = {
-            id: 5,
-            message: this._state.profilePage.newPostText,
-            likeCount: 0
-        };
+    //action - это объект, действие, которое должно сообщить, что именно нужно выполнить;
+    // у него должно быть свойство { type: 'ЗДЕСЬ УКАЗЫВАЕМ, ЧТО ВЫПОЛНИТЬ, НАПРИМЕР SET-POST' }
 
-        this._state.profilePage.posts.push(newPost);
-        this._state.profilePage.newPostText = '';
-        this._callSubscriber(this._state);
-    },
+    dispatch (action) {
+        if (action.type === 'SET-POST') {
+            let newPost = {
+                id: 5,
+                message: this._state.profilePage.newPostText,
+                likeCount: 0
+            };
 
-    setNewPostText(newText) {
-        this._state.profilePage.newPostText = newText;
-        this._callSubscriber(this._state);
-    },
+            this._state.profilePage.posts.push(newPost);
+            this._state.profilePage.newPostText = '';
+            this._callSubscriber(this._state);
 
-    setMessage() {
-        let newMessage = {
-            id: 7,
-            message: this._state.dialogsPage.newMessage
-        };
+        } else if (action.type === 'SET-NEW-POST-TEXT') {
+            this._state.profilePage.newPostText = action.newText;
+            this._callSubscriber(this._state);
 
-        this._state.dialogsPage.messages.push(newMessage);
-        this._state.dialogsPage.newMessage = '';
-        this._callSubscriber(this._state);
-    },
+        } else if (action.type === 'SET-MESSAGE') {
+            let newMessage = {
+                id: 7,
+                message: this._state.dialogsPage.newMessage
+            };
 
-    setNewMessageText(newText) {
-        this._state.dialogsPage.newMessage = newText;
-        this._callSubscriber(this._state);
+            this._state.dialogsPage.messages.push(newMessage);
+            this._state.dialogsPage.newMessage = '';
+            this._callSubscriber(this._state);
+
+        } else if (action.type === 'SET-NEW-MESSAGE-TEXT') {
+            this._state.dialogsPage.newMessage = action.newText;
+            this._callSubscriber(this._state);
+        }
     }
 }
 

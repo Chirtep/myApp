@@ -5,18 +5,19 @@ import Post from "./Post/Post";
 const MyPosts = (props) => {
 
     let postsElems =
-        props.store.getState().profilePage.posts
+        props.posts
             .map(p => <Post message={p.message} likeCount={p.likeCount}/>);
 
     let newPostElem = React.createRef();
 
     let addPost = () => {
-        props.store.setPost();
+        props.dispatch({type: 'SET-POST'});
     }
 
     let onPostChange = () => {
         let text = newPostElem.current.value;
-        props.store.setNewPostText(text);
+        let action = {type: 'SET-NEW-POST-TEXT', newText: text};
+        props.dispatch(action);
     }
 
     return <div className={s.postsBlock}>
@@ -26,13 +27,15 @@ const MyPosts = (props) => {
                 <div>
                     <textarea onChange={onPostChange}
                               ref={newPostElem}
-                              value={props.store.getState().profilePage.newPostText}/>
+                              value={props.newPostText}/>
                 </div>
+
                 <div>
                     <button onClick={addPost}>Add post</button>
                 </div>
             </div>
         </div>
+
         <div className={s.posts}>
             {postsElems}
         </div>
