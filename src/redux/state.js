@@ -1,9 +1,7 @@
 import React from "react";
-
-const SET_POST = 'SET-POST';
-const SET_NEW_POST_TEXT = 'SET-NEW-POST-TEXT';
-const SET_MESSAGE = 'SET-MESSAGE';
-const SET_NEW_MESSAGE_BODY = 'SET-NEW-MESSAGE-BODY';
+import profileReducer from "./profile-reducer";
+import dialogsReducer from "./dialogs-reducer";
+import sidebarReducer from "./sidebar-reducer";
 
 let store = {
     _state: {
@@ -91,49 +89,14 @@ let store = {
     // у него должно быть свойство { type: 'ЗДЕСЬ УКАЗЫВАЕМ, ЧТО ВЫПОЛНИТЬ, НАПРИМЕР SET-POST' }
 
     dispatch(action) {
-        if (action.type === SET_POST) {
-            let newPost = {
-                id: 5,
-                message: this._state.profilePage.newPostText,
-                likeCount: 0
-            };
 
-            this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.newPostText = '';
-            this._callSubscriber(this._state);
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        this._state.sideBar = sidebarReducer(this._state.sideBar, action)
 
-        } else if (action.type === SET_NEW_POST_TEXT) {
-            this._state.profilePage.newPostText = action.newText;
-            this._callSubscriber(this._state);
-
-        } else {
-            if (action.type === SET_MESSAGE) {
-                let newBody = {
-                    id: 7,
-                    message: this._state.dialogsPage.newMessageBody
-                };
-
-                this._state.dialogsPage.messages.push(newBody);
-                this._state.dialogsPage.newMessageBody = '';
-                this._callSubscriber(this._state);
-
-            } else {
-                if (action.type === SET_NEW_MESSAGE_BODY) {
-                    this._state.dialogsPage.newMessageBody = action.body;
-                    this._callSubscriber(this._state);
-                }
-            }
-        }
+        this._callSubscriber(this._state);
     }
 }
-
-export const setPostActionCreator = () => ({type: SET_POST})
-export const setNewPostTextActionCreator = (text) =>
-    ({type: SET_NEW_POST_TEXT, newText: text})
-
-export const setMessageCreator = () => ({type: SET_MESSAGE})
-export const setNewMessageBodyCreator = (body) =>
-    ({type: SET_NEW_MESSAGE_BODY, body: body})
 
 export default store;
 window.store = store;
