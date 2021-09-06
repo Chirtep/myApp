@@ -3,7 +3,7 @@ import React from "react";
 const SET_POST = 'SET-POST';
 const SET_NEW_POST_TEXT = 'SET-NEW-POST-TEXT';
 const SET_MESSAGE = 'SET-MESSAGE';
-const SET_NEW_MESSAGE_TEXT = 'SET-NEW-MESSAGE-TEXT';
+const SET_NEW_MESSAGE_BODY = 'SET-NEW-MESSAGE-BODY';
 
 let store = {
     _state: {
@@ -36,7 +36,7 @@ let store = {
                 {id: 6, message: 'lol'}
             ],
 
-            newMessage: 'Напиши что-нибудь!'
+            newMessageBody: ''
         },
 
         sideBar: {
@@ -108,18 +108,18 @@ let store = {
 
         } else {
             if (action.type === SET_MESSAGE) {
-                let newMessage = {
+                let newBody = {
                     id: 7,
-                    message: this._state.dialogsPage.newMessage
+                    message: this._state.dialogsPage.newMessageBody
                 };
 
-                this._state.dialogsPage.messages.push(newMessage);
-                this._state.dialogsPage.newMessage = '';
+                this._state.dialogsPage.messages.push(newBody);
+                this._state.dialogsPage.newMessageBody = '';
                 this._callSubscriber(this._state);
 
             } else {
-                if (action.type === SET_NEW_MESSAGE_TEXT) {
-                    this._state.dialogsPage.newMessage = action.newText;
+                if (action.type === SET_NEW_MESSAGE_BODY) {
+                    this._state.dialogsPage.newMessageBody = action.body;
                     this._callSubscriber(this._state);
                 }
             }
@@ -131,9 +131,9 @@ export const setPostActionCreator = () => ({type: SET_POST})
 export const setNewPostTextActionCreator = (text) =>
     ({type: SET_NEW_POST_TEXT, newText: text})
 
-export const setMessageActionCreator = () => ({type: SET_MESSAGE})
-export const setNewMessageTextActionCreator = (text) =>
-    ({type: SET_NEW_MESSAGE_TEXT, newText: text})
+export const setMessageCreator = () => ({type: SET_MESSAGE})
+export const setNewMessageBodyCreator = (body) =>
+    ({type: SET_NEW_MESSAGE_BODY, body: body})
 
 export default store;
 window.store = store;
