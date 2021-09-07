@@ -11,14 +11,13 @@ let rerenderEntireTree = (state) => {
         <BrowserRouter>
             <React.StrictMode>
                 <App
-                    state={state} dispatch={store.dispatch.bind(store)}
+                    store={store}
                 />
             </React.StrictMode>
         </BrowserRouter>,
         document.getElementById('root')
     );
 }
-
 rerenderEntireTree(store.getState());
 
 store.subscribe(() => {
