@@ -1,11 +1,19 @@
 import React from "react";
 import MyFriends from "./MyFriends";
+import StoreContext from "../../../StoreContext";
 
-const MyFriendsContainer = (props) => {
+const MyFriendsContainer = () => {
+    return (
+        <StoreContext.Consumer>
+            {
+                (store) => {
+                    let state = store.getState()
 
-    let state = props.store.getState()
-
-    return <MyFriends friends={state.sideBar.friends}/>
+                    return <MyFriends friends={state.sideBar.friends}/>
+                }
+            }
+        </StoreContext.Consumer>
+    )
 }
 
 export default MyFriendsContainer
