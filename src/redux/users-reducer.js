@@ -3,7 +3,6 @@ const SET_USERS = 'SET_USERS'
 
 let initialState = {
     users: [],
-    newPostText: 'it-kamasutra.com'
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -21,7 +20,7 @@ const usersReducer = (state = initialState, action) => {
             }
 
         case SET_USERS: {
-            return {...state, users: [...action.users]}
+            return {...state, users: [...state.users, ...action.users]}
         }
 
         default:
