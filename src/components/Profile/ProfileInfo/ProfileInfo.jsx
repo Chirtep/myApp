@@ -3,8 +3,8 @@ import s from './ProfileInfo.module.css'
 import backgroundImage from '../../../assets/images/canada.jpg'
 import Preloader from "../../common/Preloader/Preolader";
 import Contacts from "./ProfileComponents/Contacts";
-import lookingJob from "../../../assets/images/lookingforjob.jpg"
-import foundJob from "../../../assets/images/foundjob.jpg"
+import lookingJob from "../../../assets/images/logo-accept.png"
+import foundJob from "../../../assets/images/cancel-icon.png"
 
 const ProfileInfo = (props) => {
     if (!props.profile) {
@@ -23,8 +23,8 @@ const ProfileInfo = (props) => {
                     <span>{props.profile.aboutMe}</span>
                     <Contacts contacts={props.profile.contacts}/>
                     <div>
-                        <span className={s.jobFlag}>В поисках работы: {props.profile.lookingForAJob ? 'ДА' : 'НЕТ'}</span> <br/>
-                        <img className={s.jobPic} src={props.profile.lookingForAJob ? lookingJob : foundJob}/>
+                        <span className={s.jobFlag}>В поисках работы: {props.profile.lookingForAJob ?
+                            <img src={lookingJob}/> : <img src={foundJob}/>}</span>
                     </div>
                 </div>
             </div>
