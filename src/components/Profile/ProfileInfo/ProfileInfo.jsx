@@ -2,7 +2,7 @@ import React from "react";
 import s from './ProfileInfo.module.css'
 import backgroundImage from '../../../assets/images/canada.jpg'
 import Preloader from "../../common/Preloader/Preolader";
-import Contacts from "./ProfileComponents/Contacts";
+import Contacts from "./ProfileInfoContacts/Contacts";
 import lookingJob from "../../../assets/images/logo-accept.png"
 import foundJob from "../../../assets/images/cancel-icon.png"
 
