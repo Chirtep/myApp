@@ -14,8 +14,10 @@ const Header = (props) => {
                 {props.isAuth ? props.login : <NavLink to={'/login'}>Login</NavLink>}
             </div>
             <div className={s.userPhotoBlock}>{props.userProfile ?
-                <img src={props.userProfile.photos.small !== null ?
-                    props.userProfile.photos.small : defaultPic}/> : ''}
+                <NavLink to={`/profile/${props.userId}`}>
+                    <img src={props.userProfile.photos.small !== null ?
+                    props.userProfile.photos.small : defaultPic}/>
+                </NavLink> : ''}
             </div>
         </div>
     </header>

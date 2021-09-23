@@ -1,22 +1,20 @@
 import React from "react";
-import * as axios from "axios";
 import Header from "./Header";
 import {setAuthUserData, setAuthUserProfile} from "../../redux/auth-reducer";
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
+import {authAPI, profileAPI} from "../../api/api";
 
 class HeaderContainer extends React.Component {
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
-            withCredentials: true
-        })
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    let {id, login, email} = response.data.data;
+        authAPI.getAuthMe()
+            .then(data => {
+                if (data.resultCode === 0) {
+                    let {id, login, email} = data.data;
                     this.props.setAuthUserData(id, email, login);
-                    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${id}`)
-                        .then(response => {
-                            this.props.setAuthUserProfile(response.data)
+                    profileAPI.getProfile(id)
+                        .then(data => {
+                            this.props.setAuthUserProfile(data)
                         })
                 }
             });
@@ -32,7 +30,8 @@ class HeaderContainer extends React.Component {
 let mapStateToProps = (state) => ({
     isAuth: state.auth.isAuth,
     login: state.auth.login,
-    userProfile: state.auth.userProfile
+    userProfile: state.auth.userProfile,
+    userId: state.auth.userId
 });
 
 let authContainerComponent = withRouter(HeaderContainer)
