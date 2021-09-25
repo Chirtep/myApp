@@ -20,10 +20,7 @@ export const usersAPI = {
     follow(id) {
         return instance.post(`follow/` + id, {})
             .then(response => response.data)
-    }
-}
-
-export const profileAPI = {
+    },
     getProfile(userId) {
         return instance.get(`profile/` + userId)
             .then(response => response.data)

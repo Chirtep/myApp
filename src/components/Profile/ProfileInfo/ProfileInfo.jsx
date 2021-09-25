@@ -5,11 +5,14 @@ import Preloader from "../../common/Preloader/Preolader";
 import Contacts from "./ProfileInfoContacts/Contacts";
 import lookingJob from "../../../assets/images/logo-accept.png"
 import foundJob from "../../../assets/images/cancel-icon.png"
+import defaultPic from "../../../assets/images/icon-profile.png"
 
 const ProfileInfo = (props) => {
     if (!props.profile) {
         return <Preloader/>
     } else {
+        let profilePicture = props.profile.photos.large
+
         return (
             <div>
                 <div>
@@ -17,7 +20,7 @@ const ProfileInfo = (props) => {
                          src={backgroundImage}/>
                 </div>
                 <div className={s.descriptionBlock}>
-                    <img src={props.profile.photos.large}/> <br/>
+                    <img className={s.profilePicture} src={profilePicture? profilePicture: defaultPic}/> <br/>
                     <span>{props.profile.fullName}</span> <br/>
                     <span>{props.profile.userId}</span> <br/>
                     <span>{props.profile.aboutMe}</span>
