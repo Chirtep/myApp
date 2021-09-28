@@ -6,6 +6,7 @@ import Contacts from "./ProfileInfoContacts/Contacts";
 import lookingJob from "../../../assets/images/logo-accept.png"
 import foundJob from "../../../assets/images/cancel-icon.png"
 import defaultPic from "../../../assets/images/icon-profile.png"
+import ProfileStatus from "./ProfileStatus"
 
 const ProfileInfo = (props) => {
     if (!props.profile) {
@@ -21,6 +22,7 @@ const ProfileInfo = (props) => {
                 </div>
                 <div className={s.descriptionBlock}>
                     <img className={s.profilePicture} src={profilePicture? profilePicture: defaultPic}/> <br/>
+                    <ProfileStatus status={'Hello!'}/>
                     <span>{props.profile.fullName}</span> <br/>
                     <span>{props.profile.userId}</span> <br/>
                     <span>{props.profile.aboutMe}</span>
