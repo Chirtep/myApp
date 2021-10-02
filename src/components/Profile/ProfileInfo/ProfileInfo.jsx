@@ -22,7 +22,7 @@ const ProfileInfo = (props) => {
                 </div>
                 <div className={s.descriptionBlock}>
                     <img className={s.profilePicture} src={profilePicture? profilePicture: defaultPic}/> <br/>
-                    <ProfileStatus status={'Hello!'}/>
+                    <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
                     <span>{props.profile.fullName}</span> <br/>
                     <span>{props.profile.userId}</span> <br/>
                     <span>{props.profile.aboutMe}</span>
