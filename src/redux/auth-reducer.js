@@ -2,6 +2,7 @@ import {authAPI, usersAPI} from "../api/api";
 
 const SET_USER_DATA = 'SET_USER_DATA';
 const SET_AUTH_USER_PROFILE = 'SET_AUTH_USER_PROFILE';
+const SET_AUTH = 'SET_AUTH';
 
 let initialState = {
     userId: null,
@@ -21,6 +22,12 @@ const authReducer = (state = initialState, action) => {
                 isAuth: true
             }
 
+        case SET_AUTH:
+            return {
+                ...state,
+                isAuth: !state.isAuth
+            }
+
         case SET_AUTH_USER_PROFILE:
             return {
                 ...state,
@@ -34,6 +41,7 @@ const authReducer = (state = initialState, action) => {
 
 const setAuthUserData = (userId, email, login) => ({type: SET_USER_DATA, data: {userId, email, login}})
 const setAuthUserProfile = (userProfile) => ({type: SET_AUTH_USER_PROFILE, userProfile})
+const setAuth = () => ({type: SET_AUTH})
 
 export const getAuthMe = () => (dispatch) => {
     authAPI.getAuthMe()
@@ -47,8 +55,26 @@ export const getAuthMe = () => (dispatch) => {
                     })
             }
         });
-
 }
 
+export const loginMe = (email, password, rememberMe) => (dispatch) => {
+    authAPI.login(email, password, rememberMe)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                console.log('login success!')
+                dispatch(setAuth());
+            }
+        })
+}
+
+export const logout = () => (dispatch) => {
+    authAPI.logout()
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                console.log('logout success!')
+                dispatch(setAuth());
+            }
+        })
+}
 
 export default authReducer;
