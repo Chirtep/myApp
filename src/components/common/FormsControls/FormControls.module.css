@@ -12,3 +12,10 @@
 {
     color: red;
 }
+
+.formSummaryError {
+    border: solid red 1px;
+    padding: 5px;
+    width: 30%;
+    color: darkred;
+}
