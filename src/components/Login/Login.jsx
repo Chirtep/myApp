@@ -1,5 +1,5 @@
 import React from "react";
-import {Field, reduxForm} from "redux-form";
+import {reduxForm} from "redux-form";
 import {LoginForm} from "./LoginForm/LoginForm";
 
 const LoginReduxForm = reduxForm({
@@ -9,7 +9,7 @@ const LoginReduxForm = reduxForm({
 const Login = (props) => {
     const onSubmit = (formData) => {
 
-        let email = formData.login,
+        let email = formData.email,
             password = formData.password,
             rememberMe = formData.rememberMe
 

@@ -9,11 +9,6 @@ class HeaderContainer extends React.Component {
         this.props.getAuthMe()
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps.isAuth !== this.props.isAuth) {
-            this.props.getAuthMe()
-        }
-    }
 
     render() {
         return (
