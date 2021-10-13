@@ -6,7 +6,8 @@ import Contacts from "./ProfileInfoContacts/Contacts";
 import lookingJob from "../../../assets/images/logo-accept.png"
 import foundJob from "../../../assets/images/cancel-icon.png"
 import defaultPic from "../../../assets/images/icon-profile.png"
-import ProfileStatus from "./ProfileStatus"
+import ProfileStatus from "./ProfileStatusWithHooks"
+
 
 const ProfileInfo = (props) => {
     if (!props.profile) {
