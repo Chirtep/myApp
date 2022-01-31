@@ -1,69 +1,89 @@
-import React from "react";
+import React, {useEffect, useState, Suspense} from "react";
 import './App.css';
-import Navbar from "./components/Navbar/Navbar";
-import {Route, withRouter} from "react-router-dom";
-import Music from "./components/Music/Music";
-import News from "./components/News/News";
-import Settings from "./components/Settings/Settings";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
-import UsersContainer from "./components/Users/UsersContainer";
-import ProfileContainer from "./components/Profile/ProfileContainer";
+import MainMenu from "./components/Navbar/MainMenu";
+import {BrowserRouter, Route, Switch, withRouter} from "react-router-dom";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import LoginPage from "./components/Login/LoginContainer";
-import {connect} from "react-redux";
-import {compose} from "redux";
+import {Provider, useDispatch, useSelector} from "react-redux";
 import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preolader";
+import Footer from "./components/Footer/Footer";
+import * as Scroll from 'react-scroll';
+import store from "./redux/redux-store";
+import Messages from "./components/Dialogs/Messages";
 
-class App extends React.Component {
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer')),
+    ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer")),
+    UsersContainer = React.lazy(() => import("./components/Users/UsersContainer")),
+    LoginPage = React.lazy(() => import("./components/Login/LoginContainer")),
+    NewsContainer = React.lazy(() => import("./components/News/NewsContainer"))
 
-    componentDidMount() {
-        this.props.initializeApp()
+const App = (props) => {
+    const auth = useSelector(state => state.auth),
+        initialized = useSelector(state => state.app.initialized),
+        dispatch = useDispatch(),
+        scroll = Scroll.animateScroll;
+
+    useEffect(() => {
+        dispatch(initializeApp())
+    }, [dispatch])
+
+    function scrollToTop() {
+        scroll.scrollToTop();
     }
 
-    render() {
-        if(!this.props.initialized) {
-            return  <Preloader />
-        }
+    const [scrolled, setScroll] = useState(0);
 
-        return (
-            <div className='app-wrapper'>
-                <HeaderContainer/>
-                <Navbar/>
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    const handleScroll = () => {
+        setScroll(window.scrollY)
+    }
+
+    if (!initialized) {
+        return <Preloader/>
+    }
+
+    return (
+        <div className='app-wrapper grey lighten-4'>
+            <HeaderContainer/>
+            <div className={'upBtn ' + (scrolled > document.documentElement.clientHeight && 'show')} onClick={() => {
+                scrollToTop()
+            }}>
+                <i className="material-icons">arrow_drop_up</i>
+            </div>
+            <div className={'middle-wrapper'}>
+                <MainMenu isAuth={auth.isAuth}/>
                 <div className='app-wrapper-content'>
-                    <Route path='/dialogs'
-                           render={() =>
-                               <DialogsContainer/>
-                           }/>
-                    <Route path='/profile/:userId?'
-                           render={() =>
-                               <ProfileContainer/>
-                           }/>
-                    <Route path='/news'
-                           render={() =>
-                               <News/>}/>
-                    <Route path='/music'
-                           render={() =>
-                               <Music/>}/>
-                    <Route path='/users'
-                           render={() =>
-                               <UsersContainer/>}/>
-                    <Route path='/settings'
-                           render={() =>
-                               <Settings/>}/>
-                    <Route path='/login'
-                           render={() =>
-                               <LoginPage/>}/>
+                    <Suspense fallback={<Preloader/>}>
+                        <Switch>
+                            <Route exact path={'/dialogs/:Id?'} component={DialogsContainer}/>
+                            <Route exact path={'/messages'} component={Messages}/>
+                            <Route exact path={'/profile/:userId?'} component={ProfileContainer}/>
+                            <Route exact path={'/users'} component={UsersContainer}/>
+                            <Route exact path={'/news'} component={NewsContainer}/>
+                            <Route exact path={'/login'} component={LoginPage}/>
+                        </Switch>
+                    </Suspense>
                 </div>
             </div>
-        );
-    }
+            <Footer/>
+        </div>
+    );
 }
 
-const mapStateToProps = (state) => ({
-    initialized: state.app.initialized
-})
+let AppContainer = withRouter(App)
 
-export default compose(
-    withRouter,
-    connect(mapStateToProps, {initializeApp})) (App);
+const MainApp = (props) => {
+    return <BrowserRouter>
+        <React.StrictMode>
+            <Provider store={store}>
+                <AppContainer/>
+            </Provider>
+        </React.StrictMode>
+    </BrowserRouter>
+}
+
+export default MainApp

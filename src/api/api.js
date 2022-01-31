@@ -1,5 +1,5 @@
 import * as axios from "axios";
-import {getAuthMe} from "../redux/auth-reducer";
+import {feedUnifier} from "../components/common/utils/feedUnifier";
 
 const instance = axios.create({
     withCredentials: true,
@@ -24,6 +24,10 @@ export const usersAPI = {
     },
     getProfile(userId) {
         return profileAPI.getProfile(userId)
+    },
+    getFollowedUsers(currentPage, pageSize) {
+        return instance.get(`users?page=${currentPage}&count=${pageSize}&friend=true`)
+            .then(response => response.data)
     }
 }
 
@@ -37,6 +41,10 @@ export const profileAPI = {
     },
     updateStatus(status) {
         return instance.put(`profile/status`, {status: status})
+    },
+    checkFollow(userId) {
+        return instance.get(`follow/` + userId)
+            .then(response => response.data)
     }
 }
 
@@ -52,3 +60,10 @@ export const authAPI = {
             .then(response => response.data)
     }
 }
+
+export const newsAPI = {
+    getFeed(url, resource, proxy) {
+        return feedUnifier(url, resource, proxy)
+    }
+}
+

@@ -1,12 +1,9 @@
 import React from "react";
 import s from './ProfileInfo.module.css'
-import backgroundImage from '../../../assets/images/canada.jpg'
 import Preloader from "../../common/Preloader/Preolader";
 import Contacts from "./ProfileInfoContacts/Contacts";
-import lookingJob from "../../../assets/images/logo-accept.png"
-import foundJob from "../../../assets/images/cancel-icon.png"
-import defaultPic from "../../../assets/images/icon-profile.png"
-import ProfileStatus from "./ProfileStatusWithHooks"
+import defaultPic from "../../../assets/images/logo-user-icon.png"
+import ProfileStatus from "./ProfileStatus"
 
 
 const ProfileInfo = (props) => {
@@ -16,24 +13,49 @@ const ProfileInfo = (props) => {
         let profilePicture = props.profile.photos.large
 
         return (
-            <div>
-                <div>
-                    <img className='background'
-                         src={backgroundImage}/>
-                </div>
                 <div className={s.descriptionBlock}>
-                    <img className={s.profilePicture} src={profilePicture? profilePicture: defaultPic}/> <br/>
-                    <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
-                    <span>{props.profile.fullName}</span> <br/>
-                    <span>{props.profile.userId}</span> <br/>
-                    <span>{props.profile.aboutMe}</span>
-                    <Contacts contacts={props.profile.contacts}/>
-                    <div>
-                        <span className={s.jobFlag}>В поисках работы: {props.profile.lookingForAJob ?
-                            <img src={lookingJob}/> : <img src={foundJob}/>}</span>
+                    <div className={s.picBlock}>
+                        <img className={s.profilePicture} src={profilePicture? profilePicture: defaultPic} alt={'#'}/>
+                    </div>
+
+                    <div className={s.info}>
+                        <div className={s.infoBlock}>
+                            <div className={s.nameBlock}>
+                                <div className={s.nameWrapper}>
+                                    <h5>{props.profile.fullName}</h5>
+                                    {(Number(props.userId) !== Number(props.authorizedUserId)) && props.profile.followed !== undefined &&
+                                    (props.profile.followed
+                                        ? <button className={'waves-effect waves-light btn-small indigo accent-1'}
+                                                  disabled={props.followingInProgress.some(id => id === Number(props.userId))}
+                                                  onClick={() => {
+                                                      props.userUnfollow(props.userId)
+                                                  }}>Unfollow</button>
+                                        : <button className={'waves-effect waves-light btn-small indigo accent-1'}
+                                                  disabled={props.followingInProgress.some(id => id === Number(props.userId))}
+                                                  onClick={() => {
+                                                      props.userFollow(props.userId)
+                                                  }}>Follow</button>)}
+                                </div>
+                                <ProfileStatus
+                                    status={props.status}
+                                    updateStatus={props.updateStatus}
+                                    userId={props.userId}
+                                    authorizedUserId={props.authorizedUserId}/>
+                            </div>
+
+                            <div className={s.aboutMeBlock}>
+                                <div className={s.aboutMe}>
+                                    <span className={s.aboutMeTitle}>About me:</span>
+                                    <span className={s.aboutMeInfo}>{props.profile.aboutMe}</span>
+                                </div>
+                                <span className={s.lookingForAJob}>Looking for a job: {props.profile.lookingForAJob ?
+                                    <i className="material-icons">done</i> : <i className="material-icons">do_not_disturb</i>}</span>
+
+                                <Contacts contacts={props.profile.contacts}/>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
         )
     }
 }

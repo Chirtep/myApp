@@ -1,0 +1,32 @@
+.userPhoto {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+}
+
+.selectedPage {
+    font-weight: bold;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.cardContainer {
+    display: grid;
+    /*grid-template-areas:*/
+    /*'c c c'*/
+    /*'c c c';*/
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 0.7fr);
+    grid-gap: 3%;
+    margin: 2%;
+}
+
+.userCard {
+
+}
+
+.invisible {
+    display: none;
+}

@@ -1,12 +1,9 @@
-.userPhoto {
-    width: 8%;
-    height: 8%;
+.switcher {
+    margin: 2%;
 }
 
-.selectedPage {
-    font-weight: bold;
-}
-
-.pointer {
-    cursor: pointer;
+.usersWrapper {
+    background-color: white;
+    padding-top: 2%;
+    padding-bottom: 2%;
 }

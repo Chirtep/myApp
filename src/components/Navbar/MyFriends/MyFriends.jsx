@@ -1,20 +1,27 @@
 import React from "react";
 import s from './MyFriends.module.css';
 import Friend from "./Friend/Friend";
+import {NavLink} from "react-router-dom";
 
 const MyFriends = (props) => {
 
     let friendsElems =
-        props.friends.map(f => <Friend img={f.img} key={f.id} name={f.name}/>)
+        props.friends.map(f => <Friend avatar={f.photos.small} key={f.id} name={f.name} id={f.id}/>)
+
 
     return <div className={s.friendBar}>
-        <div>
-            <h1>Friends</h1>
+            <div>
+                <h3 className={'brand-logo blue-grey-text text-darken-3'}>Followed</h3>
+            </div>
+            <div className={s.friends}>
+                {friendsElems}
+            </div>
+            <div>
+                <NavLink activeClassName={s.hideButton} onClick={props.setFollowedFlag} to='/users'>
+                    <button className={'waves-effect waves-light btn-small indigo accent-1 '}>Show followed</button>
+                </NavLink>
+            </div>
         </div>
-        <div className={s.friends}>
-            {friendsElems}
-        </div>
-    </div>
 }
 
 export default MyFriends

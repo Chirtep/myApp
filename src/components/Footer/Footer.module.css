@@ -1,0 +1,6 @@
+.footer {
+    grid-area: f;
+    align-self: end;
+    bottom: 0;
+    z-index: 100;
+}

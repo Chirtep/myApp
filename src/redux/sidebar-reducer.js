@@ -1,40 +1,37 @@
+import {usersAPI} from "../api/api";
+import {RandomArray} from "../components/common/Randomizers/RandomArray/RandomArray";
+
+const SET_FRIENDS = 'myApp/sidebarReducer/SET_FRIENDS'
+
 let initialState = {
-    friends: [
-        {
-            id: 1,
-            name: 'Raweater',
-            img: 'https://www.pinclipart.com/picdir/middle/499-4992513_avatar-avatar-png-clipart.png'
-        },
-        {
-            id: 2,
-            name: 'Force_maker',
-            img: 'https://www.pinclipart.com/picdir/middle/499-4992513_avatar-avatar-png-clipart.png'
-        },
-        {
-            id: 3,
-            name: 'Vikanya',
-            img: 'https://www.pinclipart.com/picdir/middle/499-4992513_avatar-avatar-png-clipart.png'
-        },
-        {
-            id: 4,
-            name: 'Stolgi4enko',
-            img: 'https://www.pinclipart.com/picdir/middle/499-4992513_avatar-avatar-png-clipart.png'
-        },
-        {
-            id: 5,
-            name: 'Foxy',
-            img: 'https://www.pinclipart.com/picdir/middle/499-4992513_avatar-avatar-png-clipart.png'
-        },
-        {
-            id: 6,
-            name: 'MaxMayer',
-            img: 'https://www.pinclipart.com/picdir/middle/499-4992513_avatar-avatar-png-clipart.png'
-        }
-    ]
+    followedUsers: [],
+    pageSize: 100,
+    friends: []
 }
 
 const sidebarReducer = (state = initialState, action) => {
-    return state;
+
+    switch (action.type) {
+
+        case SET_FRIENDS: {
+            return {
+                ...state,
+                friends: action.friends
+            }
+        }
+
+        default:
+            return state;
+    }
+}
+
+export const setFriends = (friends) => ({type: SET_FRIENDS, friends})
+
+export const getFollowedUsers = (page, pageSize) => {
+    return async (dispatch) => {
+        let data = await usersAPI.getFollowedUsers(page, pageSize)
+        dispatch(setFriends(RandomArray(data.items, 6)))
+    }
 }
 
 export default sidebarReducer;

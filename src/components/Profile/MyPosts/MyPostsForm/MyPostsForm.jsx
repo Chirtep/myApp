@@ -1,25 +1,44 @@
 import React from "react";
-import {Field} from "redux-form";
-import {FormControl} from "../../../common/FormsControls/FormsControls";
-import {maxLengthCreator, required} from "../../../../utils/validators/validators";
+import {maxLengthCreator, required, composeValidators} from "../../../common/utils/validators";
+import {Form, Field} from "react-final-form";
+import styles from "../../../common/FormsControls/FormControls.module.css";
 
-const maxLength10 = maxLengthCreator(10);
+const maxLength500 = maxLengthCreator(500)
 
 export const PostsForm = (props) => {
+    let formData = {}
+
     return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field
-                    placeholder={'New Post'}
-                    name={'newPostText'}
-                    component={FormControl}
-                    validate={[required, maxLength10]}
-                    type={'textarea'}
-                />
-            </div>
-            <div>
-                <button>Add post</button>
-            </div>
-        </form>
+        <Form
+            initialValues={{
+                formData,
+                form: 'posts'
+            }}
+            onSubmit={props.onSubmit}
+            render={({handleSubmit, submitting}) => (
+                <form onSubmit={handleSubmit}>
+                    <Field name={'newPostText'}
+                           validate={composeValidators(required, maxLength500)}>
+                        {({input, meta}) =>
+                            (
+                                <div
+                                    className={styles.formControl + ' ' + (meta.touched && meta.error && styles.error) + ' row'}>
+                                    <div className={'input-field'}>
+                                <textarea {...input} type={'textarea'} onFocus={() => props.setHide('')}
+                                           className={'materialize-textarea'} id="textarea1"/>
+                                        <label htmlFor="textarea1">What's up?</label>
+                                        {meta.touched && meta.error && <span>{meta.error}</span>}
+                                    </div>
+                                </div>
+                            )}
+                    </Field>
+
+                    <button type={'submit'} disabled={submitting}
+                             className={styles.postsBtn + ' ' + props.hide + ' waves-effect waves-light btn indigo accent-1'}>Add post
+                    </button>
+                </form>
+            )}
+        >
+        </Form>
     )
 }

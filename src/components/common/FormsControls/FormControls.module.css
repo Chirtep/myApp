@@ -1,21 +1,60 @@
 .formControl {
+    height: 70px;
+}
 
+.hide {
+    display: none;
+}
+
+.passWrapper {
+    margin-bottom: 5%;
+}
+
+.checkboxWrapper {
+    margin-left: 1.3%;
+    padding-top: 0.5%;
+}
+
+.checkboxText {
+    margin-left: 3%;
+}
+
+.loginBtn {
+    margin-left: 1.3%;
+}
+
+.postsBtn {
+    margin-top: -4%;
+    float: right;
+    margin-right: 2%;
 }
 
 .formControl.error input,
-.formControl.error textarea
-{
-    border: solid red 1px;
+.formControl.error textarea {
+    border-bottom: solid red 1px;
 }
 
-.formControl.error span
-{
+.formControl.error span {
     color: red;
 }
 
 .formSummaryError {
-    border: solid red 1px;
+    border-bottom: solid red 1px;
     padding: 5px;
     width: 30%;
     color: darkred;
+}
+
+.checkBoxContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.checkBoxContainer span {
+    padding-top: 1px;
+}
+
+.loginForm {
+    width: 60%;
 }

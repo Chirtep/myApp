@@ -1,28 +1,73 @@
-import {Field} from "redux-form";
-import {required} from "../../../utils/validators/validators";
-import {FormControl} from "../../common/FormsControls/FormsControls";
+import {required} from "../../common/utils/validators";
 import React from "react";
-import style from '../../common/FormsControls/FormControls.module.css'
+import styles from "../../common/FormsControls/FormControls.module.css";
+import {Form, Field} from "react-final-form";
 
-export const LoginForm = (props) => {
+const LoginForm = (props) => {
+    let formData = {}
 
     return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field placeholder={'Email'} name={'email'} validate={[required]} component={FormControl} type={'input'}/>
-            </div>
-            <div>
-                <Field placeholder={'Password'} name={'password'} validate={[required]} component={FormControl} type={'password'}/>
-            </div>
-            <div>
-                <Field component={FormControl} name={'rememberMe'} type={'checkbox'}/> remember me
-            </div>
-            {props.error && <div className={style.formSummaryError}>
-                {props.error}
-            </div>}
-            <div>
-                <button>Login</button>
-            </div>
-        </form>
+        <Form
+            initialValues={{
+                formData,
+                form: 'login',
+                value: props.value || ""
+            }}
+            onSubmit={props.onSubmit}
+            render={({handleSubmit, submitting}) => (
+                <form onSubmit={handleSubmit}>
+                    <Field name={'email'}
+                           validate={required}>
+                        {({input, meta}) =>
+                            (
+                                <div
+                                    className={styles.formControl + ' ' + styles.passWrapper + ' ' + (meta.touched && meta.error && styles.error) + ' row'}>
+                                    <div className={'input-field col s6'}>
+                                        <input {...input} type={'text'} className={'materialize-textarea'} id="email"/>
+                                        <label htmlFor="email">Email</label>
+                                        {meta.touched && meta.error && <span>{meta.error}</span>}
+                                    </div>
+                                </div>
+                            )}
+                    </Field>
+
+                    <Field name={'password'}
+                           validate={required}>
+                        {({input, meta}) =>
+                            (
+                                <div
+                                    className={styles.formControl + ' ' + (meta.touched && meta.error && styles.error) + ' row'}>
+                                    <div className={'input-field col s6'}>
+                                        <input {...input} type={'password'} className={'materialize-textarea'}
+                                               id="password"/>
+                                        <label htmlFor="password">Password</label>
+                                        {meta.touched && meta.error && <span>{meta.error}</span>}
+                                    </div>
+                                </div>
+                            )}
+                    </Field>
+
+                    <Field name={'rememberMe'} type={'checkbox'}>
+                        {({input}) =>
+                            (
+                                <div
+                                    className={styles.formControl + ' ' + styles.checkboxWrapper + ' row'}>
+                                    <div className={styles.checkBoxContainer + ' input-field'}>
+                                        <label><input {...input} type={'checkbox'}/><span>Remember me</span></label>
+                                    </div>
+                                </div>
+                            )}
+                    </Field>
+
+                    <button disabled={submitting}
+                            className={styles.loginBtn + ' btn waves-effect waves-light indigo accent-1'}>Login
+                        <i className="material-icons right">send</i>
+                    </button>
+                </form>
+            )}
+        >
+        </Form>
     )
 }
+
+export default LoginForm
