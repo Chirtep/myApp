@@ -1,7 +1,7 @@
 import React, {useEffect, useState, Suspense} from "react";
 import './App.css';
 import MainMenu from "./components/Navbar/MainMenu";
-import {BrowserRouter, Route, Switch, withRouter} from "react-router-dom";
+import {HashRouter, Route, Switch, withRouter} from "react-router-dom";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import {Provider, useDispatch, useSelector} from "react-redux";
 import {initializeApp} from "./redux/app-reducer";
@@ -77,13 +77,13 @@ const App = (props) => {
 let AppContainer = withRouter(App)
 
 const MainApp = (props) => {
-    return <BrowserRouter>
+    return <HashRouter>
         <React.StrictMode>
             <Provider store={store}>
                 <AppContainer/>
             </Provider>
         </React.StrictMode>
-    </BrowserRouter>
+    </HashRouter>
 }
 
 export default MainApp
