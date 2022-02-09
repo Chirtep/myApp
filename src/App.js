@@ -1,7 +1,7 @@
 import React, {useEffect, useState, Suspense} from "react";
 import './App.css';
 import MainMenu from "./components/Navbar/MainMenu";
-import {HashRouter, Route, Switch, withRouter} from "react-router-dom";
+import {BrowserRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import {Provider, useDispatch, useSelector} from "react-redux";
 import {initializeApp} from "./redux/app-reducer";
@@ -43,7 +43,7 @@ const App = (props) => {
     }
 
     if (!initialized) {
-        return <Preloader/>
+        return <Redirect to={'/login'}/>
     }
 
     return (
@@ -59,12 +59,12 @@ const App = (props) => {
                 <div className='app-wrapper-content'>
                     <Suspense fallback={<Preloader/>}>
                         <Switch>
-                            <Route exact path={'/dialogs/:Id?'} component={DialogsContainer}/>
-                            <Route exact path={'/messages'} component={Messages}/>
-                            <Route exact path={'/profile/:userId?'} component={ProfileContainer}/>
-                            <Route exact path={'/users'} component={UsersContainer}/>
-                            <Route exact path={'/news'} component={NewsContainer}/>
-                            <Route exact path={'/login'} component={LoginPage}/>
+                            <Route path={'/dialogs/:Id?'} component={DialogsContainer}/>
+                            <Route path={'/messages'} component={Messages}/>
+                            <Route path={'/profile/:userId?'} component={ProfileContainer}/>
+                            <Route path={'/users'} component={UsersContainer}/>
+                            <Route path={'/news'} component={NewsContainer}/>
+                            <Route path={'/login'} component={LoginPage}/>
                         </Switch>
                     </Suspense>
                 </div>
@@ -77,13 +77,13 @@ const App = (props) => {
 let AppContainer = withRouter(App)
 
 const MainApp = (props) => {
-    return <HashRouter>
+    return <BrowserRouter>
         <React.StrictMode>
             <Provider store={store}>
                 <AppContainer/>
             </Provider>
         </React.StrictMode>
-    </HashRouter>
+    </BrowserRouter>
 }
 
 export default MainApp

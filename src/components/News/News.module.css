@@ -9,6 +9,10 @@
     padding: 3%;
 }
 
+.newsPost a {
+    margin-top: 2%;
+}
+
 .newsWrapper {
     width: 70%;
 }

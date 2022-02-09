@@ -2,7 +2,7 @@ import {newsAPI} from "../api/api";
 import {compare} from "../components/common/utils/compare";
 
 const SET_AGGREGATE_FEED = 'myApp/newsReducer/SET_AGGREGATE_FEED',
-    CORS_PROXY = "https://cors-anywhere.herokuapp.com/",
+    CORS_PROXY = "https://raweater-app.herokuapp.com/",
     SET_FEED = 'myApp/newsReducer/SET_FEED'
 
 let initialState = {

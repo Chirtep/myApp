@@ -2,13 +2,12 @@ import React from "react";
 import s from './MainMenu.module.css';
 import {NavLink} from "react-router-dom";
 import MyFriendsContainer from "./MyFriends/MyFriendsContainer";
-import Preloader from "../common/Preloader/Preolader";
 import {useSelector} from "react-redux";
 
 const MainMenu = (props) => {
     const isAuth = useSelector(state => state.auth.isAuth)
 
-    return <> {!isAuth? <Preloader/> : <div className={s.nav}>
+    return <> {isAuth && <div className={s.nav}>
         <div className={s.navMenu + ' collection'}>
             <div>
                 <NavLink className={'collection-item'} to='/profile'

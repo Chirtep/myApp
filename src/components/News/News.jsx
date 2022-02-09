@@ -8,6 +8,7 @@ import lenta from "../../assets/images/lenta-icon.png"
 import stopgame from "../../assets/images/stopgame-logo.png"
 import cbr from "../../assets/images/cbr-icon.png"
 import reddit from "../../assets/images/reddit-icon.png"
+import parse from 'html-react-parser';
 
 const News = (props) => {
 
@@ -17,10 +18,6 @@ const News = (props) => {
         'StopGame': stopgame,
         'Central Bank of Russia': cbr,
         'Reddit': reddit
-    }
-
-    function createMarkup(html) {
-        return {__html: html};
     }
 
     const feed = props.news.map(f => <div className={s.newsPost} key={f.id}>
@@ -35,8 +32,8 @@ const News = (props) => {
             </div>
         </div>
         <span className={((f.resource === 'StopGame' || f.resource === 'Lenta') && s.gap) + ' ' + s.bold}>{f.title}</span>
-        <div className={s.content + ' ' + (f.resource !== 'Reddit' && s.contentBorder)} dangerouslySetInnerHTML={createMarkup(f.content)}></div>
-        {f.link && f.resource !== 'Habr' && <a href={f.link}>Читать далее</a>}
+        <div className={s.content + ' ' + (f.resource === 'Habr' && s.contentBorder)}>{parse(f.content)}</div>
+        {(f.resource !== 'Habr' && 'Reddit') && <a className={s.contentBorder} href={f.link}>Читать далее</a>}
     </div>)
 
     return (
