@@ -2,6 +2,7 @@ import {profileAPI, usersAPI} from "../api/api";
 import {RandomNum} from "../components/common/Randomizers/RandomNum/RandomNum";
 import {RandomMessageGen} from "../components/common/Randomizers/RandomMessageGen/RandomMessageGen";
 import {dateGen} from "../components/common/utils/dateGen";
+import {updateUserPic} from "./auth-reducer";
 
 const SET_POST = 'myApp/profileReducer/SET-POST',
     SET_USER_PROFILE = 'myApp/profileReducer/SET_USER_PROFILE',
@@ -10,7 +11,9 @@ const SET_POST = 'myApp/profileReducer/SET-POST',
     SET_REPLIES = 'myApp/profileReducer/SET_REPLIES',
     REMOVE_REPLY = 'myApp/profileReducer/REMOVE_REPLY',
     REMOVE_POST = 'myApp/profileReducer/REMOVE_POST',
-    CHECK_FOLLOW = 'myApp/profileReducer/CHECK_FOLLOW'
+    CHECK_FOLLOW = 'myApp/profileReducer/CHECK_FOLLOW',
+    UPLOAD_PIC = 'myApp/profileReducer/UPLOAD_PIC',
+    ERRORS = 'myApp/profileReducer/ERRORS'
 
 let initialState = {
     posts: [],
@@ -18,7 +21,24 @@ let initialState = {
     profile: null,
     status: '',
     comUsers: [],
-    replies: []
+    replies: [],
+    forms: [
+        {name: 'fullName', type: 'textarea', label: 'Full name:', id: 'textarea1'},
+        {name: 'lookingForAJob', type: 'checkbox', label: 'Looking for a job?'},
+        {name: 'lookingForAJobDescription', type: 'textarea', label: 'My Professional Skills:', id: 'textarea2'},
+        {name: 'aboutMe', type: 'textarea', label: 'About me:', id: 'textarea3'}
+    ],
+    contactsForm: [
+        {name: 'contacts.facebook', type: 'textarea', label: 'Facebook', id: 'textarea4'},
+        {name: 'contacts.website', type: 'textarea', label: 'Website', id: 'textarea5'},
+        {name: 'contacts.vk', type: 'textarea', label: 'VKontakte', id: 'textarea6'},
+        {name: 'contacts.twitter', type: 'textarea', label: 'Twitter', id: 'textarea7'},
+        {name: 'contacts.instagram', type: 'textarea', label: 'Instagram', id: 'textarea8'},
+        {name: 'contacts.youtube', type: 'textarea', label: 'YouTube', id: 'textarea9'},
+        {name: 'contacts.github', type: 'textarea', label: 'GitHub', id: 'textarea10'},
+        {name: 'contacts.mainLink', type: 'textarea', label: 'Main link', id: 'textarea11'},
+    ],
+    errors: []
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -92,6 +112,18 @@ const profileReducer = (state = initialState, action) => {
                 status: action.status
             }
 
+        case UPLOAD_PIC:
+            return {
+                ...state,
+                profile: {...state.profile, photos: action.photos}
+            }
+
+        case ERRORS:
+            return {
+                ...state,
+                errors: action.errors
+            }
+
         default:
             return state;
     }
@@ -123,7 +155,9 @@ export const setPost = (newPostText, id, likeCount, comments, time, userId) => (
     }),
     removeReply = (index) => ({type: REMOVE_REPLY, index}),
     removePost = (id) => ({type: REMOVE_POST, id}),
-    checkFollow = (followed) => ({type: CHECK_FOLLOW, followed})
+    checkFollow = (followed) => ({type: CHECK_FOLLOW, followed}),
+    uploadPicSuccess = (photos) => ({type: UPLOAD_PIC, photos}),
+    setErrors = (errors) => ({type: ERRORS, errors})
 
 export const getProfile = (userId) => async (dispatch) => {
     let data = await usersAPI.getProfile(userId)
@@ -160,6 +194,28 @@ export const updateStatus = (status) => async (dispatch) => {
 
     if (response.data.resultCode === 0) {
         dispatch(setStatus(status));
+    }
+}
+
+export const uploadPic = (file) => async (dispatch) => {
+    let response = await profileAPI.uploadPic(file)
+
+    if (response.data.resultCode === 0) {
+        dispatch(uploadPicSuccess(response.data.data.photos));
+        dispatch(updateUserPic(response.data.data.photos))
+    }
+}
+
+export const saveProfile = (profile) => async (dispatch, getState) => {
+    const userId = getState().auth.userId
+
+    let response = await profileAPI.saveProfile(profile)
+
+    if (response.data.resultCode === 0) {
+        dispatch(setErrors([]))
+        dispatch(getProfile(userId))
+    } else {
+        dispatch(setErrors(response.data.messages))
     }
 }
 

@@ -31,7 +31,7 @@ const Post = (props) => {
                 {props.userProfile && props.isAuth === true &&
                 <NavLink to={'/profile/' + props.userId}>
                     <img className={s.postPic + ' circle'}
-                         src={props.userProfile.photos.small ? props.userProfile.photos.small : defaultPic}
+                         src={props.userProfile.photos.small || defaultPic}
                          alt={'#'}/>
                 </NavLink>
                 }

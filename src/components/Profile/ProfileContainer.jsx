@@ -6,10 +6,10 @@ import {
     getProfile,
     getStatus,
     removePost,
-    removeReply,
+    removeReply, saveProfile,
     setPost,
     setReplies,
-    updateStatus
+    updateStatus, uploadPic
 } from "../../redux/profile-reducer";
 import {withRouter} from "react-router-dom";
 import {follow, unfollow} from "../../redux/users-reducer";
@@ -53,6 +53,12 @@ const ProfileContainer = (props) => {
         },
         cutPost = (id) => {
             dispatch(removePost(id))
+        },
+        upload = (pic) => {
+            dispatch(uploadPic(pic))
+        },
+        saveUserProfile = (profile) => {
+            dispatch(saveProfile(profile))
         }
 
     useEffect(() => {
@@ -80,6 +86,7 @@ const ProfileContainer = (props) => {
     }
 
     return <Profile
+        isOwner={Number(props.match.params.userId) === Number(auth.userId)}
         profilePage={profilePage}
         updateStatus={updateUserStatus}
         userId={props.match.params.userId}
@@ -90,7 +97,10 @@ const ProfileContainer = (props) => {
         cutReply={cutReply}
         cutPost={cutPost}
         addPost={addPost}
-        sendReply={sendReply}/>
+        sendReply={sendReply}
+        uploadPic={upload}
+        saveProfile={saveUserProfile}
+    />
 }
 
 export default withRouter(ProfileContainer)

@@ -8,6 +8,7 @@ const Profile = (props) => {
     return (
         <div className={s.profileContainer}>
             <ProfileInfo
+                isOwner={props.isOwner}
                 profile={props.profilePage.profile}
                 status={props.profilePage.status}
                 updateStatus={props.updateStatus}
@@ -16,6 +17,11 @@ const Profile = (props) => {
                 userFollow={props.userFollow}
                 userUnfollow={props.userUnfollow}
                 followingInProgress={props.followingInProgress}
+                uploadPic={props.uploadPic}
+                forms={props.profilePage.forms}
+                contactsForm={props.profilePage.contactsForm}
+                saveProfile={props.saveProfile}
+                errors={props.profilePage.errors}
             />
             <MyPosts
                 userId={props.userId}

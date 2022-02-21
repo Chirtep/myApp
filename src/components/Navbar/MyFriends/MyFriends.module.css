@@ -5,6 +5,9 @@
 
 .friendBar button {
     margin-bottom: 5%;
+    box-sizing: border-box;
+    max-width: 70%;
+    font-size: 0.7vw;
 }
 
 .friends {
@@ -14,10 +17,14 @@
     grid-template-rows: repeat(4, 0.2fr);
     grid-column-gap: 0.5em;
     grid-row-gap: 0.5em;
-    font-size: 14px;
-
+    font-size: 0.7vw;
 }
 
 .hideButton {
     display: none;
+}
+
+.title {
+    font-size: 2.4vw;
+    font-weight: 400;
 }

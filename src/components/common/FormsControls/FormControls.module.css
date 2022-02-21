@@ -1,5 +1,15 @@
 .formControl {
-    height: 70px;
+    height: 60px;
+    margin-bottom: 2%;
+}
+
+.formField {
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.header {
+    padding-bottom: 2%;
 }
 
 .hide {
@@ -49,6 +59,8 @@
     display: flex;
     flex-direction: row;
     width: 100%;
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 
 .checkBoxContainer span {
@@ -57,4 +69,17 @@
 
 .loginForm {
     width: 60%;
+}
+
+.profileForm {
+    padding: 2%;
+}
+
+.contactsWrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.contactsCol {
+    padding-right: 4%;
 }

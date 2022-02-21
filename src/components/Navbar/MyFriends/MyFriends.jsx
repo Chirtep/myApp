@@ -11,7 +11,7 @@ const MyFriends = (props) => {
 
     return <div className={s.friendBar}>
             <div>
-                <h3 className={'brand-logo blue-grey-text text-darken-3'}>Followed</h3>
+                <span className={s.title + ' brand-logo blue-grey-text text-darken-3'}>Followed</span>
             </div>
             <div className={s.friends}>
                 {friendsElems}

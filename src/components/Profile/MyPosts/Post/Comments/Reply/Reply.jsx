@@ -16,8 +16,8 @@ const Reply = (props) => {
             }
 
         },
-        userPhoto = (props.userPhoto ? props.userPhoto : defaultPic),
-        repliedUserPic = (props.repliedUserPic ? props.repliedUserPic : defaultPic)
+        userPhoto = (props.userPhoto || defaultPic),
+        repliedUserPic = (props.repliedUserPic || defaultPic)
 
     return <div className={s.replyBox}>
         <NavLink to={'/profile/' + (props.flag === 'user'? props.userId : props.id)}>

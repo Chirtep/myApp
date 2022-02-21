@@ -1,6 +1,7 @@
 .descriptionBlock {
     display: flex;
     flex-direction: row;
+    height: 100%;
 }
 
 .info {
@@ -33,12 +34,12 @@
     width: 35%;
     background: white;
     border-radius: 2%;
+    height: 100%;
 }
 
 .profilePicture {
     max-width: 100%;
     width: auto;
-    height: 100%;
     padding: 6%;
     background-position: top center;
     border-radius: 7%;
@@ -54,6 +55,12 @@
     display: flex;
     flex-direction: row;
     margin-bottom: 1%;
+}
+
+.lookingForAJobDescription {
+    display: flex;
+    flex-direction: row;
+    margin-top: 1%;
 }
 
 .infoBlock i {
@@ -124,4 +131,13 @@
     background-color: white;
     margin-bottom: 2%;
     padding: 2%;
+}
+
+.uploadBtn {
+    max-width: 40%;
+    max-height: 5%;
+}
+
+.uploadWrapper {
+    margin: 4% 4% 4% 4%;
 }

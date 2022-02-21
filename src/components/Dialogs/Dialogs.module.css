@@ -36,6 +36,7 @@
 
 .message {
     margin-top: 2%;
+    text-overflow: ellipsis;
 }
 
 .dialogsItems {
@@ -45,6 +46,7 @@
 .dialogsBox {
     height: 100%;
     display: grid;
+    width: 90%;
 }
 
 .messagesElems {

@@ -30,7 +30,7 @@ const Comments = (props) => {
 
     return <div className={s.postBox} key={props.id}>
         <NavLink to={'/profile/' + props.id}>
-            <img className={s.postPic + ' circle'} src={props.photo ? props.photo : defaultPic} alt={'#'}/>
+            <img className={s.postPic + ' circle'} src={props.photo || defaultPic} alt={'#'}/>
         </NavLink>
         <div className={s.postData}>
             <Comment
@@ -62,7 +62,7 @@ const Comments = (props) => {
             <div className={s.replyPlate} key={name}>
                 {props.userProfile && props.isAuth &&
                 <img className={s.replyPic + ' circle'}
-                     src={props.userProfile.photos.small ? props.userProfile.photos.small : defaultPic}
+                     src={ props.userProfile.photos.small || defaultPic}
                      alt={'#'}/>}
 
                 <input ref={inputRef} autoFocus={true} defaultValue={name}/>

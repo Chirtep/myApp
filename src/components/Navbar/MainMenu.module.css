@@ -1,10 +1,9 @@
 .nav {
-    grid-area: n;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    min-width: 250px;
+    width: 20%;
 }
 
 .navMenu {
@@ -20,4 +19,8 @@
 
 .item a.activeLink {
     color: gold;
+}
+
+.navMenuBtn {
+    font-size: 0.85vw;
 }

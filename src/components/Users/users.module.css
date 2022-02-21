@@ -2,6 +2,12 @@
     margin: 2%;
 }
 
+.switcher button {
+    box-sizing: border-box;
+    max-width: 20%;
+    font-size: 0.7vw;
+}
+
 .usersWrapper {
     background-color: white;
     padding-top: 2%;

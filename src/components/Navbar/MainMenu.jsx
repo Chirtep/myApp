@@ -10,19 +10,19 @@ const MainMenu = (props) => {
     return <> {isAuth && <div className={s.nav}>
         <div className={s.navMenu + ' collection'}>
             <div>
-                <NavLink className={'collection-item'} to='/profile'
+                <NavLink className={s.navMenuBtn + ' collection-item'} to='/profile'
                          activeClassName={'collection-item active deep-purple lighten-2 px1'}>Profile</NavLink>
             </div>
             <div>
-                <NavLink className={'collection-item'} to='/dialogs'
+                <NavLink className={s.navMenuBtn + ' collection-item'} to='/dialogs'
                          activeClassName={'collection-item active deep-purple lighten-2 px1'}>Messages</NavLink>
             </div>
             <div>
-                <NavLink className={'collection-item'} to='/users'
+                <NavLink className={s.navMenuBtn + ' collection-item'} to='/users'
                          activeClassName={'collection-item active deep-purple lighten-2 px1'}>Users</NavLink>
             </div>
             <div>
-                <NavLink className={'collection-item'} to='/news'
+                <NavLink className={s.navMenuBtn + ' collection-item'} to='/news'
                          activeClassName={'collection-item active deep-purple lighten-2 px1'}>News</NavLink>
             </div>
 

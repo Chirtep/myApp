@@ -1,12 +1,12 @@
 import React from "react";
-import s from "../ProfileInfo.module.css";
-import facebook from '../../../../assets/images/facebook-icon.png'
-import website from '../../../../assets/images/world-icon.png'
-import vk from '../../../../assets/images/vk-com-icon.png'
-import twitter from '../../../../assets/images/twitter-icon.png'
-import instagram from '../../../../assets/images/instagram-icon.png'
-import youtube from '../../../../assets/images/youtube-icon.png'
-import github from '../../../../assets/images/github-icon.png'
+import s from "../../ProfileInfo.module.css";
+import facebook from '../../../../../assets/images/facebook-icon.png'
+import website from '../../../../../assets/images/world-icon.png'
+import vk from '../../../../../assets/images/vk-com-icon.png'
+import twitter from '../../../../../assets/images/twitter-icon.png'
+import instagram from '../../../../../assets/images/instagram-icon.png'
+import youtube from '../../../../../assets/images/youtube-icon.png'
+import github from '../../../../../assets/images/github-icon.png'
 
 
 const Contacts = (props) => {

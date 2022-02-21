@@ -1,7 +1,8 @@
 import {authAPI, usersAPI} from "../api/api";
 
 const SET_USER_DATA = 'myApp/authReducer/SET_USER_DATA',
-    SET_AUTH_USER_PROFILE = 'myApp/authReducer/SET_AUTH_USER_PROFILE'
+    SET_AUTH_USER_PROFILE = 'myApp/authReducer/SET_AUTH_USER_PROFILE',
+    UPDATE_USER_PIC = 'myApp/authReducer/UPDATE_USER_PIC'
 
 let initialState = {
     userId: null,
@@ -26,16 +27,23 @@ const authReducer = (state = initialState, action) => {
                 userProfile: action.userProfile
             }
 
+        case UPDATE_USER_PIC:
+            return {
+                ...state,
+                userProfile: {...state.userProfile, photos: action.photos}
+            }
+
         default:
             return state;
     }
 }
 
-const setAuthUserData = (userId, email, login, isAuth) => ({
+export const setAuthUserData = (userId, email, login, isAuth) => ({
     type: SET_USER_DATA,
     payload: {userId, email, login, isAuth}
-})
-const setAuthUserProfile = (userProfile) => ({type: SET_AUTH_USER_PROFILE, userProfile})
+}),
+    setAuthUserProfile = (userProfile) => ({type: SET_AUTH_USER_PROFILE, userProfile}),
+    updateUserPic = (photos) => ({type: UPDATE_USER_PIC, photos})
 
 export const getAuthMe = () => async (dispatch) => {
     let data = await authAPI.getAuthMe()
