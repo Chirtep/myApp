@@ -55,12 +55,14 @@
     display: flex;
     flex-direction: row;
     margin-bottom: 1%;
+    width: 100%;
 }
 
 .lookingForAJobDescription {
     display: flex;
     flex-direction: row;
     margin-top: 1%;
+    width: 100%;
 }
 
 .infoBlock i {
@@ -104,6 +106,12 @@
 
 .aboutMeInfo {
     margin-left: 2%;
+    width: 85%;
+}
+
+.professionalSkills {
+    margin-left: 2%;
+    width: 70%;
 }
 
 .aboutMeBlock {
@@ -117,10 +125,12 @@
 
 .aboutMeTitle {
     color: #818c99;
+    width: 15%;
 }
 
 .lookingForAJob {
     color: #818c99;
+    width: 30%;
 }
 
 .lookingForAJob i {

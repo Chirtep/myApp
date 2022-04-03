@@ -3,28 +3,32 @@ import s from "./Dialogs.module.css";
 import {SendMessageForm} from "./SendMessageForm/SendMessageForm";
 import {NavLink} from "react-router-dom";
 import defaultPic from "../../assets/images/logo-user-icon.png"
+import {useSelector} from "react-redux";
 
 const Messages = (props) => {
+
+    const dialogsPage = useSelector(state => state.dialogsPage),
+        auth = useSelector(state => state.auth)
 
     const onSubmit = (formData, form) => {
         props.sendMessage(formData.newMessageBody);
         form.restart()
     }
 
-    let currentUser = props.dialogs.filter(d => Number(d.id) === Number(props.userId))
+    let currentUser = dialogsPage.dialogs.filter(d => Number(d.id) === Number(props.userId))
 
     let messagesElems =
-        props.messages.filter(m => Number(m.id) === Number(props.userId)).map((m, index) => <div
+        dialogsPage.messages.filter(m => Number(m.id) === Number(props.userId)).map((m, index) => <div
             className={s.messagesElems} key={index}>
 
-            <NavLink to={'/profile/' + (!m.flag ? m.id : props.authUserId)}>
+            <NavLink to={'/profile/' + (!m.flag ? m.id : auth.userId)}>
                 {!m.flag ? <img src={currentUser[0].photos.small ? currentUser[0].photos.small : defaultPic} alt={'#'}/>
-                    : <img src={props.authUserProfile.photos.small ? props.authUserProfile.photos.small : defaultPic}
+                    : <img src={auth.userProfile.photos.small ? auth.userProfile.photos.small : defaultPic}
                            alt={'#'}/>}
             </NavLink>
 
             <p>
-                <span className={s.name}>{!m.flag ? currentUser[0].name : props.authUserProfile.fullName}</span>
+                <span className={s.name}>{!m.flag ? currentUser[0].name : auth.userProfile.fullName}</span>
                 <span>{m.message}</span>
             </p>
         </div>)

@@ -2,7 +2,7 @@ import React, {useEffect, useState, Suspense} from "react";
 import './App.css';
 import MainMenu from "./components/Navbar/MainMenu";
 import {BrowserRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
-import HeaderContainer from "./components/Header/HeaderContainer";
+import Header from "./components/Header/Header";
 import {Provider, useDispatch, useSelector} from "react-redux";
 import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preolader";
@@ -11,17 +11,18 @@ import * as Scroll from 'react-scroll';
 import store from "./redux/redux-store";
 import Messages from "./components/Dialogs/Messages";
 
-const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer')),
-    ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer")),
-    UsersContainer = React.lazy(() => import("./components/Users/UsersContainer")),
-    LoginPage = React.lazy(() => import("./components/Login/LoginContainer")),
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/Dialogs')),
+    ProfileContainer = React.lazy(() => import("./components/Profile/Profile")),
+    UsersContainer = React.lazy(() => import("./components/Users/Users")),
+    LoginPage = React.lazy(() => import("./components/Login/Login")),
     NewsContainer = React.lazy(() => import("./components/News/NewsContainer"))
 
 const App = (props) => {
     const auth = useSelector(state => state.auth),
         initialized = useSelector(state => state.app.initialized),
         dispatch = useDispatch(),
-        scroll = Scroll.animateScroll;
+        scroll = Scroll.animateScroll,
+        cn = require('classnames')
 
     useEffect(() => {
         dispatch(initializeApp())
@@ -48,8 +49,8 @@ const App = (props) => {
 
     return (
         <div className='app-wrapper grey lighten-4'>
-            <HeaderContainer/>
-            <div className={'upBtn ' + (scrolled > document.documentElement.clientHeight && 'show')} onClick={() => {
+            <Header/>
+            <div className={cn('upBtn', (scrolled > document.documentElement.clientHeight && 'show'))} onClick={() => {
                 scrollToTop()
             }}>
                 <i className="material-icons">arrow_drop_up</i>

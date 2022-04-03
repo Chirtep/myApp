@@ -30,13 +30,19 @@
 }
 
 .loginBtn {
+    margin-top: 2%;
     margin-left: 1.3%;
 }
 
+.captchaImg {
+    margin-bottom: 0%;
+}
+
 .postsBtn {
-    margin-top: -4%;
     float: right;
     margin-right: 2%;
+    align-self: end;
+    margin-top: -1%;
 }
 
 .formControl.error input,
@@ -50,8 +56,8 @@
 
 .formSummaryError {
     border-bottom: solid red 1px;
-    padding: 5px;
-    width: 30%;
+    padding-top: 3%;
+    width: 100%;
     color: darkred;
 }
 
@@ -73,6 +79,7 @@
 
 .profileForm {
     padding: 2%;
+    width: 65%;
 }
 
 .contactsWrapper {
@@ -81,5 +88,30 @@
 }
 
 .contactsCol {
-    padding-right: 4%;
+    width: 50%;
+}
+
+.contactsColSeparate {
+    margin-right: 3%;
+}
+
+.submitWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.loginSubmit {
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    margin-left: 1.2%;
+}
+
+.loginSubmit div {
+    align-self: self-end;
+    margin-bottom: 0%;
+}
+
+.loginError {
+    width: 20%;
 }

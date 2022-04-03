@@ -1,15 +1,17 @@
-import {authAPI, usersAPI} from "../api/api";
+import {authAPI, securityAPI, usersAPI} from "../api/api";
 
 const SET_USER_DATA = 'myApp/authReducer/SET_USER_DATA',
     SET_AUTH_USER_PROFILE = 'myApp/authReducer/SET_AUTH_USER_PROFILE',
-    UPDATE_USER_PIC = 'myApp/authReducer/UPDATE_USER_PIC'
+    UPDATE_USER_PIC = 'myApp/authReducer/UPDATE_USER_PIC',
+    GET_CAPTCHA_URL = 'myApp/authReducer/GET_CAPTCHA_URL'
 
 let initialState = {
     userId: null,
     email: null,
     login: null,
     isAuth: false,
-    userProfile: null
+    userProfile: null,
+    captchaUrl: null
 };
 
 const authReducer = (state = initialState, action) => {
@@ -33,6 +35,12 @@ const authReducer = (state = initialState, action) => {
                 userProfile: {...state.userProfile, photos: action.photos}
             }
 
+        case GET_CAPTCHA_URL:
+            return {
+                ...state,
+                captchaUrl: action.captchaUrl
+            }
+
         default:
             return state;
     }
@@ -43,7 +51,8 @@ export const setAuthUserData = (userId, email, login, isAuth) => ({
     payload: {userId, email, login, isAuth}
 }),
     setAuthUserProfile = (userProfile) => ({type: SET_AUTH_USER_PROFILE, userProfile}),
-    updateUserPic = (photos) => ({type: UPDATE_USER_PIC, photos})
+    updateUserPic = (photos) => ({type: UPDATE_USER_PIC, photos}),
+    setCaptchaUrl = (captchaUrl) => ({type: GET_CAPTCHA_URL, captchaUrl})
 
 export const getAuthMe = () => async (dispatch) => {
     let data = await authAPI.getAuthMe()
@@ -58,12 +67,11 @@ export const getAuthMe = () => async (dispatch) => {
     }
 }
 
-export const loginMe = (email, password, rememberMe) => async (dispatch) => {
-    let response = await authAPI.login(email, password, rememberMe)
+export const getCaptcha = () => async (dispatch) => {
+    let response = await securityAPI.getCaptcha()
+    const captchaUrl = response.data.url
 
-    if (response.data.resultCode === 0) {
-        dispatch(getAuthMe());
-    }
+    dispatch(setCaptchaUrl(captchaUrl))
 }
 
 export const logout = () => async (dispatch) => {

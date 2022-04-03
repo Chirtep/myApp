@@ -2,12 +2,15 @@ import React from "react";
 import styles from "./usersCards.module.css";
 import {NavLink} from "react-router-dom";
 import userPhoto from "../../../assets/images/logo-user-icon.png";
-
+import {useSelector} from "react-redux";
+import FollowBtn from "../../common/utils/followBtn";
 
 const UsersCards = (props) => {
+    const usersPage = useSelector(state => state.usersPage)
+
     return <div className={styles.cardContainer}>
         {
-            props.users.map(u => <div className={styles.userCard} key={u.id}>
+            usersPage.users.map(u => <div className={styles.userCard} key={u.id}>
 
                 <div className={styles.photoBlock}>
                     <NavLink to={'/profile/' + u.id}>
@@ -22,18 +25,7 @@ const UsersCards = (props) => {
                 </div>
 
                 <div className={styles.btnBlock}>
-                    {u.followed
-                        ? <button className={'waves-effect waves-light btn-small indigo accent-1'}
-                                  disabled={props.followingInProgress.some(id => id === u.id)}
-                                  onClick={() => {
-                                      props.unfollow(u.id)
-                                  }}>Unfollow</button>
-                        : <button className={'waves-effect waves-light btn-small indigo accent-1'}
-                                  disabled={props.followingInProgress.some(id => id === u.id)}
-                                  onClick={() => {
-                                      props.follow(u.id)
-                                  }}>Follow</button>
-                    }
+                    <FollowBtn id={u.id} followed={u.followed}/>
                 </div>
             </div>)
         }

@@ -8,7 +8,8 @@ const maxLength500 = maxLengthCreator(500)
 export const SendMessageForm = (props) => {
     let formData = {}
 
-    const textArea = useRef(null);
+    const textArea = useRef(null),
+        cn = require('classnames')
 
     function handleClick() {
         textArea.current.focus();
@@ -29,7 +30,7 @@ export const SendMessageForm = (props) => {
                         {({input, meta, ...rest}) =>
                             (
                                 <div
-                                    className={styles.formControl + ' ' + (meta.touched && meta.error && styles.error) + ' row'}>
+                                    className={cn(styles.formControl, (meta.touched && meta.error && styles.error), 'row')}>
                                     <div className={'input-field'}>
                                 <textarea  {...input} type={'textarea'} ref={textArea}
                                            className={'materialize-textarea'} id="textarea1"/>

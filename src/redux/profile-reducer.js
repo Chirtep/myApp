@@ -12,8 +12,7 @@ const SET_POST = 'myApp/profileReducer/SET-POST',
     REMOVE_REPLY = 'myApp/profileReducer/REMOVE_REPLY',
     REMOVE_POST = 'myApp/profileReducer/REMOVE_POST',
     CHECK_FOLLOW = 'myApp/profileReducer/CHECK_FOLLOW',
-    UPLOAD_PIC = 'myApp/profileReducer/UPLOAD_PIC',
-    ERRORS = 'myApp/profileReducer/ERRORS'
+    UPLOAD_PIC = 'myApp/profileReducer/UPLOAD_PIC'
 
 let initialState = {
     posts: [],
@@ -118,12 +117,6 @@ const profileReducer = (state = initialState, action) => {
                 profile: {...state.profile, photos: action.photos}
             }
 
-        case ERRORS:
-            return {
-                ...state,
-                errors: action.errors
-            }
-
         default:
             return state;
     }
@@ -156,8 +149,7 @@ export const setPost = (newPostText, id, likeCount, comments, time, userId) => (
     removeReply = (index) => ({type: REMOVE_REPLY, index}),
     removePost = (id) => ({type: REMOVE_POST, id}),
     checkFollow = (followed) => ({type: CHECK_FOLLOW, followed}),
-    uploadPicSuccess = (photos) => ({type: UPLOAD_PIC, photos}),
-    setErrors = (errors) => ({type: ERRORS, errors})
+    uploadPicSuccess = (photos) => ({type: UPLOAD_PIC, photos})
 
 export const getProfile = (userId) => async (dispatch) => {
     let data = await usersAPI.getProfile(userId)
@@ -203,19 +195,6 @@ export const uploadPic = (file) => async (dispatch) => {
     if (response.data.resultCode === 0) {
         dispatch(uploadPicSuccess(response.data.data.photos));
         dispatch(updateUserPic(response.data.data.photos))
-    }
-}
-
-export const saveProfile = (profile) => async (dispatch, getState) => {
-    const userId = getState().auth.userId
-
-    let response = await profileAPI.saveProfile(profile)
-
-    if (response.data.resultCode === 0) {
-        dispatch(setErrors([]))
-        dispatch(getProfile(userId))
-    } else {
-        dispatch(setErrors(response.data.messages))
     }
 }
 

@@ -1,8 +1,10 @@
 import React from "react";
 import s from './Footer.module.css'
 
+const cn = require('classnames')
+
 const Footer = (props) => {
-    return <footer className={s.footer + ' page-footer deep-purple lighten-2 px1'}>
+    return <footer className={cn(s.footer, 'page-footer deep-purple lighten-2 px1')}>
         <div className="container">
             <div className="row">
                 <div className="col l6 s12">

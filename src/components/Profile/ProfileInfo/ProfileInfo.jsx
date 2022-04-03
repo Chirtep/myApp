@@ -4,25 +4,31 @@ import Preloader from "../../common/Preloader/Preolader";
 import defaultPic from "../../../assets/images/logo-user-icon.png"
 import ProfileData from "./ProfileData/ProfileData";
 import ProfileDataForm from "./ProfileDataForm/ProfileDataForm";
+import {useDispatch, useSelector} from "react-redux";
+import {uploadPic} from "../../../redux/profile-reducer";
 
 const ProfileInfo = (props) => {
     let [editMode, setEditMode] = useState(false)
 
-    if (!props.profile) {
+    const profilePage = useSelector(state => state.profilePage),
+        dispatch = useDispatch(),
+        cn = require('classnames')
+
+    if (!profilePage.profile) {
         return <Preloader/>
     } else {
         const onUpload = (e) => {
             if (e.target.files.length) {
-                props.uploadPic(e.target.files[0])
+                dispatch(uploadPic(e.target.files[0]))
             }
         }
 
         return (
             <div className={s.descriptionBlock}>
                 <div className={s.picBlock}>
-                    <img className={s.profilePicture} src={props.profile.photos.large || defaultPic} alt={'#'}/>
-                    {props.isOwner && <div className={s.uploadWrapper + " file-field input-field"}>
-                        <div className={s.uploadBtn + " btn-small indigo accent-1"}>
+                    <img className={s.profilePicture} src={profilePage.profile.photos.large || defaultPic} alt={'#'}/>
+                    {props.isOwner && <div className={cn(s.uploadWrapper, "file-field input-field")}>
+                        <div className={cn(s.uploadBtn, "btn-small indigo accent-1")}>
                             <span>Upload</span>
                             <input type="file" onChange={onUpload}/>
                         </div>
@@ -33,27 +39,14 @@ const ProfileInfo = (props) => {
                 </div>
 
                 {editMode ? <ProfileDataForm
-                        profile={props.profile}
-                        saveProfile={props.saveProfile}
-                        contactsForm={props.contactsForm}
-                        forms={props.forms}
-                        errors={props.errors}
                         setEditMode={setEditMode}
                         editMode={editMode}
-
                     />
                     : <ProfileData
-                        status={props.status}
-                        updateStatus={props.updateStatus}
                         userId={props.userId}
-                        authorizedUserId={props.authorizedUserId}
-                        profile={props.profile}
-                        followingInProgress={props.followingInProgress}
-                        userUnfollow={props.userUnfollow}
-                        userFollow={props.userFollow}
                         isOwner={props.isOwner}
                         toEditMode={() => {
-                           setEditMode(true)
+                            setEditMode(true)
                         }}
                     />
                 }

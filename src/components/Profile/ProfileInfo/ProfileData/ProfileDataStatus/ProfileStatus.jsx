@@ -1,24 +1,29 @@
 import React, {useEffect, useState} from "react";
 import s from '../../ProfileInfo.module.css'
+import {useDispatch, useSelector} from "react-redux";
+import {updateStatus} from "../../../../../redux/profile-reducer";
 
 const ProfileStatus = (props) => {
+    const profilePage = useSelector(state => state.profilePage),
+        authId = useSelector(state => state.auth.userId),
+        dispatch = useDispatch()
 
     let [editMode, setEditMode] = useState(false);
-    let [status, setStatus] = useState(props.status)
+    let [status, setStatus] = useState(profilePage.status)
 
     useEffect( () => {
-        setStatus(props.status);
-    }, [props.status])
+        setStatus(profilePage.status);
+    }, [profilePage.status])
 
     const activateEditMode = () => {
-        if(Number(props.userId) === Number(props.authorizedUserId) || !props.userId) {
+        if(Number(props.userId) === Number(authId) || !props.userId) {
             setEditMode(true);
         }
     }
 
     const deactivateEditMode = () => {
         setEditMode(false);
-        props.updateStatus(status)
+        dispatch(updateStatus(status))
     }
 
     const onStatusChange = (e) => {
@@ -29,7 +34,7 @@ const ProfileStatus = (props) => {
         <div className={s.statusBlock}>
             {!editMode &&
             <div>
-                <span onDoubleClick={activateEditMode}>{props.status || '----'}</span>
+                <span onDoubleClick={activateEditMode}>{profilePage.status || '----'}</span>
             </div>
             }
             {editMode &&

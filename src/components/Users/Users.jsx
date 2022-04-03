@@ -1,26 +1,31 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Pagination from "./Pagination/Pagination";
 import UsersCards from "./UsersCards/UsersCards";
 import s from "./users.module.css"
+import {useDispatch, useSelector} from "react-redux";
+import {getUsers, setCurrentPage, setFlag} from "../../redux/users-reducer";
 
 let Users = (props) => {
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+    const usersPage = useSelector(state => state.usersPage),
+        dispatch = useDispatch()
 
-    let pages = [];
-    for (let i = Math.max(1, props.currentPage - 3); i <= Math.min(props.currentPage + 3, pagesCount); i++) {
-        pages.push(i)
-    }
+    useEffect(() => {
+        dispatch(getUsers(usersPage.currentPage, usersPage.pageSize, usersPage.flag))
+    }, [usersPage.currentPage, usersPage.pageSize, dispatch, usersPage.flag])
 
     return (
         <div className={s.usersWrapper}>
-            <Pagination pages={pages} pagesCount={pagesCount} currentPage={props.currentPage} setPage={props.setPage}/>
+            <Pagination />
 
             <div className={s.switcher}>
                 <button className={'waves-effect waves-light btn-small indigo accent-1'}
-                        onClick={props.toggleFlag}>{props.flag === true ? 'Show all' : 'Show followed'}</button>
+                        onClick={() => {
+                            dispatch(setFlag(!usersPage.flag))
+                            dispatch(setCurrentPage(1))
+                        }}>{usersPage.flag === true ? 'Show all' : 'Show followed'}</button>
             </div>
 
-            <UsersCards users={props.users} followingInProgress={props.followingInProgress} follow={props.follow}
+            <UsersCards follow={props.follow}
                         unfollow={props.unfollow}/>
         </div>
     );

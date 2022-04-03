@@ -1,10 +1,14 @@
 import {required} from "../../common/utils/validators";
 import React from "react";
 import styles from "../../common/FormsControls/FormControls.module.css";
-import {Form, Field} from "react-final-form";
+import {Form} from "react-final-form";
+import CreateField from "../../common/FormsControls/CreateField";
+import {useSelector} from "react-redux";
 
 const LoginForm = (props) => {
-    let formData = {}
+    let formData = {},
+        captchaUrl = useSelector(state => state.auth.captchaUrl),
+        cn = require('classnames')
 
     return (
         <Form
@@ -14,55 +18,55 @@ const LoginForm = (props) => {
                 value: props.value || ""
             }}
             onSubmit={props.onSubmit}
-            render={({handleSubmit, submitting}) => (
+            render={({handleSubmit, submitting, submitError}) => (
                 <form onSubmit={handleSubmit}>
-                    <Field name={'email'}
-                           validate={required}>
-                        {({input, meta}) =>
-                            (
-                                <div
-                                    className={styles.formControl + ' ' + styles.passWrapper + ' ' + (meta.touched && meta.error && styles.error) + ' row'}>
-                                    <div className={'input-field col s6'}>
-                                        <input {...input} type={'text'} className={'materialize-textarea'} id="email"/>
-                                        <label htmlFor="email">Email</label>
-                                        {meta.touched && meta.error && <span>{meta.error}</span>}
-                                    </div>
-                                </div>
-                            )}
-                    </Field>
 
-                    <Field name={'password'}
-                           validate={required}>
-                        {({input, meta}) =>
-                            (
-                                <div
-                                    className={styles.formControl + ' ' + (meta.touched && meta.error && styles.error) + ' row'}>
-                                    <div className={'input-field col s6'}>
-                                        <input {...input} type={'password'} className={'materialize-textarea'}
-                                               id="password"/>
-                                        <label htmlFor="password">Password</label>
-                                        {meta.touched && meta.error && <span>{meta.error}</span>}
-                                    </div>
-                                </div>
-                            )}
-                    </Field>
+                    <CreateField
+                        name={'email'}
+                        type={'textarea'}
+                        label={'Email'}
+                        validate={required}
+                        id={'email'}
+                        fieldClassName={'input-field col s6'}
+                    />
 
-                    <Field name={'rememberMe'} type={'checkbox'}>
-                        {({input}) =>
-                            (
-                                <div
-                                    className={styles.formControl + ' ' + styles.checkboxWrapper + ' row'}>
-                                    <div className={styles.checkBoxContainer + ' input-field'}>
-                                        <label><input {...input} type={'checkbox'}/><span>Remember me</span></label>
-                                    </div>
-                                </div>
-                            )}
-                    </Field>
+                    <br/>
+                    <br/>
+
+                    <CreateField
+                        type={'password'}
+                        name={'password'}
+                        label={'Password'}
+                        validate={required}
+                        id={'password'}
+                        fieldClassName={'input-field col s6'}
+                    />
+
+                    <CreateField
+                        type={'checkbox'}
+                        name={'rememberMe'}
+                        label={'Remember me'}
+                    />
+
+                    <div className={styles.loginSubmit}>
+                        {captchaUrl && <img src={captchaUrl} className={styles.captchaImg} alt={'#'}/>}
+                        {captchaUrl && <CreateField
+                            name={'captcha'}
+                            type={'textarea'}
+                            label={'Captcha'}
+                            id={'captcha'}
+                            fieldClassName={'input-field col s12'}
+                        />}
+                    </div>
 
                     <button disabled={submitting}
-                            className={styles.loginBtn + ' btn waves-effect waves-light indigo accent-1'}>Login
+                            className={cn(styles.loginBtn, 'btn waves-effect waves-light indigo accent-1')}>Login
                         <i className="material-icons right">send</i>
                     </button>
+
+                    {submitError && (
+                        <div className={cn(styles.formSummaryError, styles.loginError)}>{submitError}</div>
+                    )}
                 </form>
             )}
         >

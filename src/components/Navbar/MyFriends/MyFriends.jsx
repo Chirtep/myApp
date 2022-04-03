@@ -8,10 +8,11 @@ const MyFriends = (props) => {
     let friendsElems =
         props.friends.map(f => <Friend avatar={f.photos.small} key={f.id} name={f.name} id={f.id}/>)
 
+    const cn = require('classnames')
 
     return <div className={s.friendBar}>
             <div>
-                <span className={s.title + ' brand-logo blue-grey-text text-darken-3'}>Followed</span>
+                <span className={cn(s.title, 'brand-logo blue-grey-text text-darken-3')}>Followed</span>
             </div>
             <div className={s.friends}>
                 {friendsElems}

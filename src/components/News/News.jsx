@@ -6,17 +6,19 @@ import Preloader from "../common/Preloader/Preolader";
 import habr from "../../assets/images/habr-icon.png"
 import lenta from "../../assets/images/lenta-icon.png"
 import stopgame from "../../assets/images/stopgame-logo.png"
-import cbr from "../../assets/images/cbr-icon.png"
 import reddit from "../../assets/images/reddit-icon.png"
 import parse from 'html-react-parser';
+import sports from '../../assets/images/sports-icon.png'
 
 const News = (props) => {
+
+    const cn = require('classnames')
 
     let imgObj = {
         'Habr': habr,
         'Lenta': lenta,
         'StopGame': stopgame,
-        'Central Bank of Russia': cbr,
+        'Sports': sports,
         'Reddit': reddit
     }
 
@@ -31,10 +33,11 @@ const News = (props) => {
                 </div>
             </div>
         </div>
-        <span className={((f.resource === 'StopGame' || f.resource === 'Lenta') && s.gap) + ' ' + s.bold}>{f.title}</span>
-        <div className={s.content + ' ' + (f.resource === 'Habr' && s.contentBorder)}>{parse(f.content)}</div>
+        <span className={cn(((f.resource === 'StopGame' || f.resource === 'Lenta') && s.gap), s.bold)}>{f.title}</span>
+        <div className={cn(s.content, (f.resource === 'Habr' && s.contentBorder))}>{parse(f.content)}</div>
         {(f.resource !== 'Habr' && 'Reddit') && <a className={s.contentBorder} href={f.link}>Читать далее</a>}
     </div>)
+
 
     return (
 

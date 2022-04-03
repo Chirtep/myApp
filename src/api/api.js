@@ -62,8 +62,8 @@ export const profileAPI = {
 }
 
 export const authAPI = {
-    login(email, password, rememberMe = false) {
-        return instance.post(`auth/login`, {email, password, rememberMe})
+    login(email, password, rememberMe = false, captcha = null) {
+        return instance.post(`auth/login`, {email, password, rememberMe, captcha})
     },
     logout() {
         return instance.post(`auth/logout`, {})
@@ -77,6 +77,12 @@ export const authAPI = {
 export const newsAPI = {
     getFeed(url, resource, proxy) {
         return feedUnifier(url, resource, proxy)
+    }
+}
+
+export const securityAPI = {
+    getCaptcha() {
+        return instance.get(`security/get-captcha-url`)
     }
 }
 

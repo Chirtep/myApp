@@ -5,3 +5,8 @@
 .loginBlock h1 {
     margin-left: 1%;
 }
+
+.testLoginData {
+    display: flex;
+    flex-direction: column;
+}

@@ -1,43 +1,50 @@
-import React from "react";
+import React, {useEffect} from "react";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import s from '../Profile/Profile.module.css'
 import MyPosts from "./MyPosts/MyPosts";
-
+import {useDispatch, useSelector} from "react-redux";
+import {getComUsers, getProfile, getStatus} from "../../redux/profile-reducer";
+import {withRouter} from "react-router-dom";
 
 const Profile = (props) => {
+
+    const authId = useSelector(state => state.auth.userId),
+        profilePage = useSelector(state => state.profilePage),
+        dialogsPage = useSelector(state => state.dialogsPage),
+        dispatch = useDispatch()
+
+    useEffect(() => {
+        let userId = props.match.params.userId
+        if (!userId) {
+            userId = authId;
+            props.history.push('/profile/' + userId)
+            if (!userId) {
+                props.history.push('/login')
+            }
+        }
+
+        dispatch(getProfile(userId))
+        dispatch(getStatus(userId))
+    }, [authId, dispatch, props.history, props.match.params.userId])
+
+    useEffect(() => {
+        if (profilePage.comUsers.length === 0) {
+            dispatch(getComUsers(dialogsPage.words))
+        }
+    }, [dispatch, profilePage.comUsers.length, dialogsPage.words])
+
+
     return (
         <div className={s.profileContainer}>
             <ProfileInfo
-                isOwner={props.isOwner}
-                profile={props.profilePage.profile}
-                status={props.profilePage.status}
-                updateStatus={props.updateStatus}
-                userId={props.userId}
-                authorizedUserId={props.auth.userId}
-                userFollow={props.userFollow}
-                userUnfollow={props.userUnfollow}
-                followingInProgress={props.followingInProgress}
-                uploadPic={props.uploadPic}
-                forms={props.profilePage.forms}
-                contactsForm={props.profilePage.contactsForm}
-                saveProfile={props.saveProfile}
-                errors={props.profilePage.errors}
+                isOwner={Number(props.match.params.userId) === Number(authId)}
+                userId={props.match.params.userId}
             />
             <MyPosts
-                userId={props.userId}
-                posts={props.profilePage.posts}
-                newPostText={props.profilePage.newPostText}
-                userProfile={props.auth.userProfile}
-                isAuth={props.auth.isAuth}
-                addPost={props.addPost}
-                authId={props.auth.userId}
-                sendReply={props.sendReply}
-                replies={props.profilePage.replies}
-                cutReply={props.cutReply}
-                cutPost={props.cutPost}
+                userId={props.match.params.userId}
             />
         </div>
     )
 }
 
-export default Profile
+export default withRouter(Profile)

@@ -3,13 +3,20 @@ import s from './Post.module.css';
 import defaultPic from "../../../../assets/images/logo-user-icon.png";
 import Comments from "./Comments/Comments";
 import {NavLink} from "react-router-dom";
+import {removePost} from "../../../../redux/profile-reducer";
+import {useDispatch, useSelector} from "react-redux";
 
 const Post = (props) => {
 
     const [value, setValue] = useState("favorite_border"),
         [num, setNum] = useState(props.likeCount),
         [hide, setHide] = useState(s.hide),
-        [comments, setComments] = useState(props.comments)
+        [comments, setComments] = useState(props.comments),
+        dispatch = useDispatch(),
+        cutPost = (id) => {
+            dispatch(removePost(id))
+        },
+        auth = useSelector(state => state.auth)
 
     const handleClick = () => {
         if (value === "favorite_border") {
@@ -22,22 +29,22 @@ const Post = (props) => {
     }
 
     const removeComment = (id) => {
-        setComments(comments.filter(c => c.id !== id))
-    }
+            setComments(comments.filter(c => c.id !== id))
+        }
 
     return <div className={s.item + ' blue-grey-text text-darken-3'}>
         <div className={s.profilePlate}>
             <div className={s.profileBox}>
-                {props.userProfile && props.isAuth === true &&
+                {auth.userProfile && auth.isAuth === true &&
                 <NavLink to={'/profile/' + props.userId}>
                     <img className={s.postPic + ' circle'}
-                         src={props.userProfile.photos.small || defaultPic}
+                         src={auth.userProfile.photos.small || defaultPic}
                          alt={'#'}/>
                 </NavLink>
                 }
                 <div className={s.profilePanel}>
                     <NavLink to={'/profile/' + props.userId}>
-                        <span className={s.profileText}>{props.userProfile.fullName}</span>
+                        <span className={s.profileText}>{auth.userProfile.fullName}</span>
                     </NavLink>
                     <span className={s.time}>{props.time}</span>
                 </div>
@@ -45,7 +52,7 @@ const Post = (props) => {
             </div>
 
             <i onClick={() => {
-                props.cutPost(props.id)
+                cutPost(props.id)
             }
             } className={s.likeIcon + ' small material-icons'}>clear</i>
         </div>
@@ -71,17 +78,14 @@ const Post = (props) => {
             {comments.map(c => <Comments
                 removeComment={removeComment}
                 key={c.id}
-                replies={props.replies}
-                userProfile={props.userProfile}
-                sendReply={props.sendReply}
-                isAuth={props.isAuth}
                 id={c.id}
                 photo={c.photos.small}
                 name={c.name}
                 message={c.message}
                 likeCount={c.likeCount}
-                cutReply={props.cutReply}
-                time={c.time} userId={props.userId}/>)}
+                time={c.time} userId={props.userId}
+                sendReply={props.sendReply}
+            />)}
         </div>
     </div>
 }

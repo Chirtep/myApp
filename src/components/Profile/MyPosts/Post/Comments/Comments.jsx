@@ -5,6 +5,7 @@ import Reply from "./Reply/Reply";
 import {UseFocus} from "../../../../common/utils/UseFocus";
 import {NavLink} from "react-router-dom";
 import Comment from "./Comment/Comment";
+import {useSelector} from "react-redux";
 
 const Comments = (props) => {
     const [reply, setReply] = useState(0),
@@ -26,7 +27,9 @@ const Comments = (props) => {
             setReply(id)
             replier === userName ? setFlag('user') : setFlag('reply')
             setInputFocus()
-        }
+        },
+        replies = useSelector(state => state.profilePage.replies),
+        userProfile = useSelector(state => state.auth.userProfile)
 
     return <div className={s.postBox} key={props.id}>
         <NavLink to={'/profile/' + props.id}>
@@ -43,35 +46,32 @@ const Comments = (props) => {
                 setInputFocus={setInputFocus} setName={setName}
                 handleClick={handleClick} value={value}/>
 
-            {props.replies.length !== 0 &&
-            props.replies.filter(r => r.id === props.id).map((f, index) => <Reply key={index}
+            {replies.length !== 0 &&
+            replies.filter(r => r.id === props.id).map((f, index) => <Reply key={index}
                                                                                   setReplyFocus={setReplyFocus}
                                                                                   repliedUserPic={f.repliedUserPic}
-                                                                                  userPhoto={props.userProfile.photos.small}
                                                                                   replier={f.replier} flag={f.flag}
-                                                                                  userName={props.userProfile.fullName}
                                                                                   repliedUser={f.repliedUser}
                                                                                   reply={f.reply} id={f.id}
                                                                                   setName={setName}
                                                                                   likeCount={f.likeCount}
-                                                                                  cutReply={props.cutReply}
                                                                                   i={index} time={f.time}
                                                                                   userId={props.userId}/>)}
 
             {reply === props.id &&
             <div className={s.replyPlate} key={name}>
-                {props.userProfile && props.isAuth &&
+                {userProfile && props.isAuth &&
                 <img className={s.replyPic + ' circle'}
-                     src={ props.userProfile.photos.small || defaultPic}
+                     src={userProfile.photos.small || defaultPic}
                      alt={'#'}/>}
 
                 <input ref={inputRef} autoFocus={true} defaultValue={name}/>
                 <i onClick={() => {
                     inputRef.current.value.length !== 0 &&
                     props.sendReply(props.id, inputRef.current.value,
-                        flag === 'user' ? props.userProfile.fullName : props.name, props.photo, 10,
+                        flag === 'user' ? userProfile.fullName : props.name, props.photo, 10,
                         {
-                            userName: props.userProfile.fullName,
+                            userName: userProfile.fullName,
                             name: props.name
                         }, flag)
                     inputRef.current.value = ''

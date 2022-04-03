@@ -5,10 +5,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import MainApp from "./App";
 
-    ReactDOM.render(
-        <MainApp/>,
-        document.getElementById('root')
-    )
+ReactDOM.render(
+    <MainApp/>,
+    document.getElementById('root')
+)
 
 window.__store__ = store;
 // If you want to start measuring performance in your app, pass a function

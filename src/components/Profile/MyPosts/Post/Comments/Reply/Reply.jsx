@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import s from "../../Post.module.css";
 import defaultPic from "../../../../../../assets/images/logo-user-icon.png";
 import {NavLink} from "react-router-dom";
+import {removeReply} from "../../../../../../redux/profile-reducer";
+import {useDispatch, useSelector} from "react-redux";
 
 const Reply = (props) => {
     const [value, setValue] = useState("favorite_border"),
@@ -16,19 +18,24 @@ const Reply = (props) => {
             }
 
         },
-        userPhoto = (props.userPhoto || defaultPic),
-        repliedUserPic = (props.repliedUserPic || defaultPic)
+        repliedUserPic = (props.repliedUserPic || defaultPic),
+        dispatch = useDispatch(),
+        cutReply = (i) => {
+            dispatch(removeReply(i))
+        },
+        userProfile = useSelector(state => state.auth.userProfile),
+        userPhoto = (userProfile.userPhoto || defaultPic)
 
     return <div className={s.replyBox}>
-        <NavLink to={'/profile/' + (props.flag === 'user'? props.userId : props.id)}>
+        <NavLink to={'/profile/' + (props.flag === 'user' ? props.userId : props.id)}>
             <img className={s.replyPic + ' circle'}
-                 src={props.replier === props.userName ? userPhoto : repliedUserPic}
+                 src={props.replier === userProfile.userName ? userPhoto : repliedUserPic}
                  alt={'#'}/>
         </NavLink>
         <div className={s.replyContainer}>
             <div className={s.namePlate}>
                 <div className={s.nameBox}>
-                    <NavLink to={'/profile/' + (props.flag === 'user'? props.userId : props.id)}>
+                    <NavLink to={'/profile/' + (props.flag === 'user' ? props.userId : props.id)}>
                         <span className={s.replier}>{props.replier}</span>
                     </NavLink>
                     {!props.reply.includes(props.repliedUser) &&
@@ -36,7 +43,7 @@ const Reply = (props) => {
                 </div>
 
                 <i onClick={() => {
-                    props.cutReply(props.i)
+                    cutReply(props.i)
                 }
                 } className={s.likeIcon + ' small material-icons'}>clear</i>
             </div>

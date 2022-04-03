@@ -2,14 +2,14 @@ import {newsAPI} from "../api/api";
 import {compare} from "../components/common/utils/compare";
 
 const SET_AGGREGATE_FEED = 'myApp/newsReducer/SET_AGGREGATE_FEED',
-    CORS_PROXY = "https://raweater-app.herokuapp.com/",
+    CORS_PROXY = "https://raweater-cors.herokuapp.com/",
     SET_FEED = 'myApp/newsReducer/SET_FEED'
 
 let initialState = {
     aggregateFeed: [],
     feedInitialData: [
         {url: 'https://www.reddit.com/.rss?limit=100', resource: 'Reddit'},
-        {url: 'http://www.cbr.ru/rss/eventrss', resource: 'Central Bank of Russia'},
+        {url: 'http://www.sports.ru/rss/rubric.xml?s=208', resource: 'Sports'},
         {url: 'https://lenta.ru/rss/news', resource: 'Lenta'},
         {url: 'https://rss.stopgame.ru/rss_all.xml', resource: 'StopGame'},
         {url: 'https://habr.com/ru/rss/news/?fl=ru?limit=100', resource: 'Habr'}

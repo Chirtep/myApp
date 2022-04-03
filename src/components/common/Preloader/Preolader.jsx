@@ -1,8 +1,10 @@
 import React from "react";
 import s from './preloader.module.css'
 
+const cn = require('classnames')
+
 let Preloader = (props) => {
-    return <div className={s.preload + ' preloader-wrapper big active'}>
+    return <div className={cn(s.preload, 'preloader-wrapper big active')}>
         <div className="spinner-layer spinner-blue-only">
             <div className="circle-clipper left">
                 <div className="circle"></div>

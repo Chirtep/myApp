@@ -17,8 +17,9 @@ const NewsContainer = (props) => {
 
 
     useEffect(() => {
-        (news.feed.length === 0 && news.aggregateFeed.length === 490) && dispatch(getFeed(getElementsInArray(news.aggregateFeed, 0)))
-    }, [dispatch, news.aggregateFeed, news.feed.length])
+        (news.feed.length === 0 && news.aggregateFeed.length > 400)
+        && dispatch(getFeed(getElementsInArray(news.aggregateFeed, 0)))
+    }, [dispatch, news.feed.length, news.aggregateFeed.length, news.aggregateFeed])
 
     const [offset, setOffset] = useState(14)
 

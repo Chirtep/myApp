@@ -3,7 +3,8 @@ import {maxLengthCreator, required, composeValidators} from "../../../common/uti
 import {Form, Field} from "react-final-form";
 import styles from "../../../common/FormsControls/FormControls.module.css";
 
-const maxLength500 = maxLengthCreator(500)
+const maxLength500 = maxLengthCreator(500),
+    cn = require('classnames')
 
 export const PostsForm = (props) => {
     let formData = {}
@@ -22,7 +23,7 @@ export const PostsForm = (props) => {
                         {({input, meta}) =>
                             (
                                 <div
-                                    className={styles.formControl + ' ' + (meta.touched && meta.error && styles.error) + ' row'}>
+                                    className={cn(styles.formControl, (meta.touched && meta.error && styles.error), 'row')}>
                                     <div className={'input-field'}>
                                 <textarea {...input} type={'textarea'} onFocus={() => props.setHide('')}
                                            className={'materialize-textarea'} id="textarea1"/>
@@ -34,7 +35,7 @@ export const PostsForm = (props) => {
                     </Field>
 
                     <button type={'submit'} disabled={submitting}
-                             className={styles.postsBtn + ' ' + props.hide + ' waves-effect waves-light btn indigo accent-1'}>Add post
+                             className={cn(styles.postsBtn, props.hide, 'waves-effect waves-light btn indigo accent-1')}>Add post
                     </button>
                 </form>
             )}

@@ -121,7 +121,6 @@ export const getUsers = (page, pageSize, followed) => {
     }
 }
 
-
 export const follow = (userId) => {
     return async (dispatch) => {
         await toggleFollowFlow(dispatch, userId, usersAPI.follow.bind(usersAPI))
