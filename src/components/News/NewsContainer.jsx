@@ -4,6 +4,7 @@ import {getAggregateFeed, getFeed} from "../../redux/news-reducer";
 import News from "./News";
 import {getElementsInArray} from "../common/utils/getElementsInArray";
 import Preloader from "../common/Preloader/Preolader";
+import {compare} from "../common/utils/compare";
 
 const NewsContainer = (props) => {
     const news = useSelector(state => state.news),
@@ -17,9 +18,9 @@ const NewsContainer = (props) => {
 
 
     useEffect(() => {
-        (news.feed.length === 0 && news.aggregateFeed.length > 400)
+        (Number(news.feedInitialData.length) === news.count)
         && dispatch(getFeed(getElementsInArray(news.aggregateFeed, 0)))
-    }, [dispatch, news.feed.length, news.aggregateFeed.length, news.aggregateFeed])
+    }, [dispatch, news.feedInitialData.length, news.count, news.aggregateFeed])
 
     const [offset, setOffset] = useState(14)
 
@@ -29,7 +30,7 @@ const NewsContainer = (props) => {
     }
 
     return <>
-        {news.aggregateFeed.length === 0? <Preloader/> : <News getMoreFeed={getMoreFeed} news={news.feed}/>}
+        {Number(news.feedInitialData.length) === news.count ? <News getMoreFeed={getMoreFeed} news={news.feed.sort(compare)}/> : <Preloader/>}
     </>
 }
 

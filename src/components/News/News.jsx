@@ -4,11 +4,11 @@ import {dateGen} from "../common/utils/dateGen";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Preloader from "../common/Preloader/Preolader";
 import habr from "../../assets/images/habr-icon.png"
-import lenta from "../../assets/images/lenta-icon.png"
 import stopgame from "../../assets/images/stopgame-logo.png"
 import reddit from "../../assets/images/reddit-icon.png"
 import parse from 'html-react-parser';
 import sports from '../../assets/images/sports-icon.png'
+import stack from '../../assets/images/stack-icon.png'
 
 const News = (props) => {
 
@@ -16,7 +16,7 @@ const News = (props) => {
 
     let imgObj = {
         'Habr': habr,
-        'Lenta': lenta,
+        'Stack Overflow': stack,
         'StopGame': stopgame,
         'Sports': sports,
         'Reddit': reddit
@@ -33,7 +33,7 @@ const News = (props) => {
                 </div>
             </div>
         </div>
-        <span className={cn(((f.resource === 'StopGame' || f.resource === 'Lenta') && s.gap), s.bold)}>{f.title}</span>
+        <span className={cn(((f.resource === 'StopGame') && s.gap), s.bold)}>{f.title}</span>
         <div className={cn(s.content, (f.resource === 'Habr' && s.contentBorder))}>{parse(f.content)}</div>
         {(f.resource !== 'Habr' && 'Reddit') && <a className={s.contentBorder} href={f.link}>Читать далее</a>}
     </div>)
